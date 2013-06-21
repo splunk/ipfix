@@ -1,0 +1,24 @@
+######################################################
+#
+# Splunk for Microsoft Exchange
+# 
+# Copyright (C) 2011 Splunk, Inc.
+# All Rights Reserved
+#
+######################################################
+
+[]
+access = read : [ * ], write : [ admin, power ]
+
+[eventtypes]
+export = system
+
+[props]
+export = system
+
+[transforms]
+export = system
+
+[viewstates]
+access = read : [ * ], write : [ * ]
+export = system
