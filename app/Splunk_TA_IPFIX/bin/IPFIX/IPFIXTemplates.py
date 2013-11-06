@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 __author__ = 'Joel Bennett'
 from struct import unpack
-from os import path, listdir
+from os import path, walk, environ
 import xml.etree.cElementTree as ElementTree
 
 import logging
@@ -236,40 +236,47 @@ def flatten(items, name=None):
                 yield el
 
 ## Load the default ipfix.xml and our handmade netscaler.xml
-TEMPLATE_PATH = path.join('.', 'templates')
-for filename in listdir(TEMPLATE_PATH):
-    enterpriseId = 0
-    name, ext = filename.split('.')
-    if ext == 'xml':
-        fileSource = path.join(TEMPLATE_PATH, filename)
+if not "SPLUNK_HOME" in environ:
+    TEMPLATE_PATH = path.abspath(path.join(path.dirname(path.abspath(__file__)), 'information-elements'))
+else:
+    APP_PATH = path.join(environ["SPLUNK_HOME"], 'etc', 'apps', 'Splunk_TA_IPFIX')
+    TEMPLATE_PATH = path.abspath(path.join(APP_PATH, 'bin', 'IPFIX', 'information-elements'))
 
-        try:
-            spec = ElementTree.parse(fileSource)
-        except Exception, e:
-            logging.error("Unable to parse XML for " + fileSource + ": " + str(e))
-            continue
 
-        if filename != "ipfix.xml":
+for root, dirs, files in walk(TEMPLATE_PATH):
+    for filename in files:
+        enterpriseId = 0
+        name, ext = filename.split('.')
+        if ext == 'xml':
+            fileSource = path.join(TEMPLATE_PATH, filename)
+
             try:
-                registration_rule = spec.getroot().findtext(".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}registration_rule")
-                enterpriseId = int(registration_rule)
+                spec = ElementTree.parse(fileSource)
             except Exception, e:
-                logging.warn("No enterprise ID for " + fileSource + ": " + str(e))
-                enterpriseId = 0
-                pass
-        ## The ipfix might have lots of registries, the one we care about is the ipfix information elements registry
-        records = spec.getroot().findall(
-            ".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}record")
-        ## Loop through all the records and insert them with the key = enterpiseId:elementId
-        for record in records:
-            TemplateField.elements[
-                "{}:{}".format(enterpriseId, record.findtext('{http://www.iana.org/assignments}elementId'))] = \
-                TemplateField(
-                    elementId=record.findtext('{http://www.iana.org/assignments}elementId'),
-                    enterpriseId=enterpriseId,
-                    name=record.findtext('{http://www.iana.org/assignments}name'),
-                    dataTypeName=record.findtext('{http://www.iana.org/assignments}dataType'),
-                    dataTypeSemantics=record.findtext('{http://www.iana.org/assignments}dataTypeSemantics')
+                logging.error("Unable to parse XML for " + fileSource + ": " + str(e))
+                continue
+
+            if filename != "ipfix.xml":
+                try:
+                    registration_rule = spec.getroot().findtext(".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}registration_rule")
+                    enterpriseId = int(registration_rule)
+                except Exception, e:
+                    logging.warn("No enterprise ID for " + fileSource + ": " + str(e))
+                    enterpriseId = 0
+                    pass
+            ## The ipfix might have lots of registries, the one we care about is the ipfix information elements registry
+            records = spec.getroot().findall(
+                ".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}record")
+            ## Loop through all the records and insert them with the key = enterpiseId:elementId
+            for record in records:
+                TemplateField.elements[
+                    "{}:{}".format(enterpriseId, record.findtext('{http://www.iana.org/assignments}elementId'))] = \
+                    TemplateField(
+                        elementId=record.findtext('{http://www.iana.org/assignments}elementId'),
+                        enterpriseId=enterpriseId,
+                        name=record.findtext('{http://www.iana.org/assignments}name'),
+                        dataTypeName=record.findtext('{http://www.iana.org/assignments}dataType'),
+                        dataTypeSemantics=record.findtext('{http://www.iana.org/assignments}dataTypeSemantics')
                 )
 
 
