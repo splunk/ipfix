@@ -20,9 +20,8 @@ class Parser:
         while setStart < self.length:
             (setId, setLength) = unpack("!HH", rawData[setStart:setStart + 4])
             logger.info(
-                "Version: {}; FullLength: {}; Timestamp: {}; Sequence: {}; Observer: {}; Address: {}; SetLength: {}; SetId: {}".format(
-                    self.version, self.length, self.timestamp, self.sequence, self.observerId, self.source, setLength,
-                    setId))
+                "Version: {}; FullLength: {}; Timestamp: {}; FlowSequence: {}; ObserverDomainId: {}; Address: {}; FlowSetId: {}; FlowSetLength: {}; ".format(
+                    self.version, self.length, self.timestamp, self.sequence, self.observerId, self.source, setId, setLength))
 
             if setId == 2:
                 TemplateSet(self.templateKey, rawData[setStart + 4:setStart + setLength], logger=logger)
@@ -51,5 +50,5 @@ class Parser:
             setStart += setLength
 
     def __str__(self):
-        # return "Version: {} FullLength: {} Data Records:\n".format(self.version, self.length) + str(self.data)
+        # return "Version: {}; Length: {}; FlowSequence: {}; Data Records:\n".format(self.version, self.length, self.sequence) + str([str(dataSet) for dataSet in self.data])
         return "\n".join([str(dataSet) for dataSet in self.data])
