@@ -40,13 +40,15 @@ class Data:
         else:
             start = 1
         data = data[start:length + start]
-        return str(data).rstrip("\x00"), length + start
+        return str(data).rstrip("\x00"), length + start, length
 
     def __init__(self, template, rawData, logger=logging):
         start = 0
         self.templateId = template.id
         self.data = []  # [IPFIXDataField('template', template.id)]
         for field in template:
+            length = field.length
+
             if not field.dataType:
                 #    The Collecting Process MUST note the Information Element identifier
                 #    of any Information Element that it does not understand and MAY
@@ -54,15 +56,20 @@ class Data:
                 logger.error(
                     "Have not implemented parsing for '{}' of length {} ({}:{}) which is needed for template {}.".format(
                         field.dataTypeName, field.length, field.enterpriseId, field.id, template.id))
+
+                self.data.append(DataField("{}:{}".format(field.enterpriseId, field.id), rawData[start:start + length].encode('hex')))
+                start += length
                 continue
 
-            length = field.length
             code = "!" + (field.dataType.unpackCode if length == field.dataType.defaultLength else str(
                 length) + field.dataType.unpackCode)
 
             try:
                 if field.length == 65535:
-                    data, length = self.readVariableLengthString(rawData[start:])
+                    data, length, stringlength = self.readVariableLengthString(rawData[start:])
+                    # Tweak start and length purely for pretty-print purposes
+                    start += length - stringlength
+                    length = stringlength
 
                 elif field.dataTypeName == 'dateTimeSeconds':
                     # MUST be encoded in a 32-bit integer
@@ -94,8 +101,8 @@ class Data:
 
                 logger.info(
                     "Parsed {} ({}:{}) [ElementId: {}:{}] for template {}. Got '{}' from the data ({}): {}".format(
-                        field.name, field.dataTypeName, field.length, field.enterpriseId, field.id, template.id, data,
-                        code, rawData[start:start + field.length].encode('hex')))
+                        field.name, field.dataTypeName, length, field.enterpriseId, field.id, template.id, data,
+                        code, rawData[start:start + length].encode('hex')))
 
             except Exception, err:
                 data = "--"
