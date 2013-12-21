@@ -78,7 +78,7 @@ class TemplateField:
 
 
 class Template(object):
-    def __init__(self, rawData):
+    def __init__(self, rawData, logger=logging):
         self.id, self.fieldCount = unpack("!HH", rawData[0:4])
         self.fields = []
         self.length = 4
@@ -94,7 +94,7 @@ class Template(object):
             else:
                 self.length += 4
 
-            # print "Field: {} {} {}".format(tFieldId, fieldId, fieldLength)
+            logger.info("Field: {}:{} ({})".format(enterpriseId, elementId, fieldLength))
             self.fields.append(TemplateField(elementId, enterpriseId, fieldLength))
 
     def __len__(self):
@@ -155,8 +155,8 @@ class TemplateSet(object):
 
             _next = 0
             while _next < self.length:
-                template = Template(rawData[_next:])
-                # print "Template {}".format(template.id)
+                template = Template(rawData[_next:], logger=logger)
+                logger.info("Template {}".format(template.id))
                 self.templates[template.id] = template
                 _next += template.length
 

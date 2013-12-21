@@ -53,16 +53,11 @@ class Data:
                 #    The Collecting Process MUST note the Information Element identifier
                 #    of any Information Element that it does not understand and MAY
                 #    discard that Information Element from the Flow Record.
+                # NOTE: we only parse variable-length strings, because those are identifiable by the length == 65535
+                #       but we do not discard anything anymore. we display it as hex below...
                 logger.error(
                     "Have not implemented parsing for '{}' of length {} ({}:{}) which is needed for template {}.".format(
                         field.dataTypeName, field.length, field.enterpriseId, field.id, template.id))
-
-                self.data.append(DataField("{}:{}".format(field.enterpriseId, field.id), rawData[start:start + length].encode('hex')))
-                start += length
-                continue
-
-            code = "!" + (field.dataType.unpackCode if length == field.dataType.defaultLength else str(
-                length) + field.dataType.unpackCode)
 
             try:
                 if field.length == 65535:
@@ -70,34 +65,44 @@ class Data:
                     # Tweak start and length purely for pretty-print purposes
                     start += length - stringlength
                     length = stringlength
-
-                elif field.dataTypeName == 'dateTimeSeconds':
-                    # MUST be encoded in a 32-bit integer
-                    # containing the number of seconds since 0000 UTC Jan 1, 1970.
-                    # The 32-bit integer allows the time encoding up to 136 years.
-                    data = unpack(code, rawData[start:start + field.length])[0]
-                    data = datetime.datetime.fromtimestamp(data).isoformat()
-
-                elif field.dataTypeName == 'dateTimeMilliseconds':
-                    # MUST be encoded in a 64-bit integer
-                    # containing the number of milliseconds since 0000 UTC Jan 1, 1970
-                    data = unpack(code, rawData[start:start + field.length])[0]
-                    data = datetime.datetime.fromtimestamp(data / 1000.0).isoformat()
-
-                elif field.dataTypeName.startswith('dateTime'):
-                    # dateTimeMicroseconds and dateTimeNanoseconds are encoded as NTP timestamp
-                    # Which is a 64 bit fixed-width with near picosecond precision
-                    # But we're converting them to dateTime (with microsecond precision)
-                    # and then rendering them as a float in unix timestamp
-                    # Which is a float (and we're doing this at microsecond precision)
-                    data = float(NtpTime.fromBytes(rawData[start:start + field.length]))
-                elif field.dataTypeName == 'ipv4Address':
-                    data = socket_inet_ntop(socket.AF_INET, rawData[start:start + field.length])
-                elif field.dataTypeName == 'ipv6Address':
-                    #data = unpack(code, rawData[start:start+field.length])[0]
-                    data = socket_inet_ntop(socket.AF_INET6, rawData[start:start + field.length])
                 else:
-                    data = unpack(code, rawData[start:start + field.length])[0]
+                    if not field.dataType:
+                        self.data.append(DataField("{}:{}".format(field.enterpriseId, field.id), rawData[start:start + length].encode('hex')))
+                        start += length
+                        continue
+
+                    code = "!" + (field.dataType.unpackCode
+                                  if length == field.dataType.defaultLength
+                                  else "L" if (field.dataType.unpackCode == 'Q' and length == 4)
+                                  else str(length) + field.dataType.unpackCode)
+
+                    if field.dataTypeName == 'dateTimeSeconds':
+                        # MUST be encoded in a 32-bit integer
+                        # containing the number of seconds since 0000 UTC Jan 1, 1970.
+                        # The 32-bit integer allows the time encoding up to 136 years.
+                        data = unpack(code, rawData[start:start + field.length])[0]
+                        data = datetime.datetime.fromtimestamp(data).isoformat()
+
+                    elif field.dataTypeName == 'dateTimeMilliseconds':
+                        # MUST be encoded in a 64-bit integer
+                        # containing the number of milliseconds since 0000 UTC Jan 1, 1970
+                        data = unpack(code, rawData[start:start + field.length])[0]
+                        data = datetime.datetime.fromtimestamp(data / 1000.0).isoformat()
+
+                    elif field.dataTypeName.startswith('dateTime'):
+                        # dateTimeMicroseconds and dateTimeNanoseconds are encoded as NTP timestamp
+                        # Which is a 64 bit fixed-width with near picosecond precision
+                        # But we're converting them to dateTime (with microsecond precision)
+                        # and then rendering them as a float in unix timestamp
+                        # Which is a float (and we're doing this at microsecond precision)
+                        data = float(NtpTime.fromBytes(rawData[start:start + field.length]))
+                    elif field.dataTypeName == 'ipv4Address':
+                        data = socket_inet_ntop(socket.AF_INET, rawData[start:start + field.length])
+                    elif field.dataTypeName == 'ipv6Address':
+                        #data = unpack(code, rawData[start:start+field.length])[0]
+                        data = socket_inet_ntop(socket.AF_INET6, rawData[start:start + field.length])
+                    else:
+                        data = unpack(code, rawData[start:start + field.length])[0]
 
                 logger.info(
                     "Parsed {} ({}:{}) [ElementId: {}:{}] for template {}. Got '{}' from the data ({}): {}".format(
