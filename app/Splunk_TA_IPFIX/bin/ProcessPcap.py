@@ -20,24 +20,20 @@ CONFIG_FILE = path.join(APP_PATH, 'default', 'ipfix.conf'), path.join(APP_PATH, 
 LOG_FILENAME = path.join(APP_PATH, 'log', 'appflow.log')
 DEBUG_LOG_FILENAME = path.join(APP_PATH, 'log', 'debug.log')
 
-# For testing purpose
-#CONFIG_FILE = './ipfix.conf'
-#LOG_FILENAME = './appflow.log'
-
 # Read config file
 Config = ConfigParser()
 Config.read(CONFIG_FILE)
 PROTOCOL = 'pcap'
-# HOST = Config.get('network', 'host')
+HOST = Config.get('network', 'host')
 PORT = Config.getint('network', 'port')
-# PROTOCOL = Config.get('network', 'protocol')
+PROTOCOL = Config.get('network', 'protocol')
 MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
 
 splunkLogger = SplunkLogger(LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
 debugLogger = SplunkLogger(DEBUG_LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
 
-# Currently, only support UDP
+# ProcessPcap is about testing, we're reading a previously captured .pcap file
 captureFile = Config.get('testing', 'file')
 pkts = PcapReader(captureFile)
 
@@ -72,4 +68,4 @@ for p in pkts:
             splunkLogger.info(str(ipfix))
 
     else:
-        debugLogger.info("DISCARD: Data to wrong port {0} observer='{observer}' data='{data}'".format(dst_port, src_port, data.encode('hex')))
+        debugLogger.info("DISCARD: Data to wrong port {0} observer='{1}' data='{2}'".format(dst_port, src_port, data.encode('hex')))

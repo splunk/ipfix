@@ -18,9 +18,6 @@ else:
 CONFIG_FILE = os.path.join(APP_PATH, 'default', 'ipfix.conf'), os.path.join(APP_PATH, 'local', 'ipfix.conf')
 LOG_FILENAME = os.path.join(APP_PATH, 'log', 'appflow.log')
 DEBUG_LOG_FILENAME = os.path.join(APP_PATH, 'log', 'debug.log')
-# For testing purpose
-#CONFIG_FILE = './ipfix.conf'
-#LOG_FILENAME = './appflow.log'
 
 # Read config file
 Config = ConfigParser.ConfigParser()
