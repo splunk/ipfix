@@ -55,7 +55,7 @@ class Data:
                 #    discard that Information Element from the Flow Record.
                 # NOTE: we only parse variable-length strings, because those are identifiable by the length == 65535
                 #       but we do not discard anything anymore. we display it as hex below...
-                logger.error(
+                logger.warning(
                     "Have not implemented parsing for '{}' of length {} ({}:{}) which is needed for template {}.".format(
                         field.dataTypeName, field.length, field.enterpriseId, field.id, template.id))
 
@@ -180,6 +180,6 @@ class DataSet:
                                                                                                   self.templateKey[0],
                                                                                                   self.templateKey[1])
         if self.length:
-            return header + (";\r\n" + header).join([str(data) for data in self]) + ";"
+            return header + (";\n" + header).join([str(data) for data in self]) + ";"
         else:
             return header + 'ParseError="Template not known (yet).";'
