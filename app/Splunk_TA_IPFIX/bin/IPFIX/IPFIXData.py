@@ -19,9 +19,9 @@ class DataField:
     def __str__(self):
         ## NOTE: uncomment the "if" to have paddingOctects render as empty strings
         if isinstance(self.value, float):
-            return '{0}="{1:9f}"'.format(self.name, self.value)  # if self.name != 'paddingOctets' else ''
+            return '{0}="{1:9f}";'.format(self.name, self.value)  # if self.name != 'paddingOctets' else ''
         else:
-            return '{}="{}"'.format(self.name, self.value)  # if self.name != 'paddingOctets' else ''
+            return '{}="{}";'.format(self.name, self.value)  # if self.name != 'paddingOctets' else ''
 
 
 class Data:
@@ -104,7 +104,7 @@ class Data:
                     else:
                         data = unpack(code, rawData[start:start + field.length])[0]
 
-                logger.info(
+                logger.debug(
                     "Parsed {} ({}:{}) [ElementId: {}:{}] for template {}. Got '{}' from the data ({}): {}".format(
                         field.name, field.dataTypeName, length, field.enterpriseId, field.id, template.id, data,
                         code, rawData[start:start + length].encode('hex')))
@@ -123,7 +123,7 @@ class Data:
 
     def __str__(self):
         ## NOTE: paddingOctets are currently NOT rendered at all
-        return "; ".join([str(field) for field in self.data if field.name != 'paddingOctets'])
+        return " ".join([str(field) for field in self.data if field.name != 'paddingOctets'])
 
 
 class DataSet:
@@ -180,6 +180,6 @@ class DataSet:
                                                                                                   self.templateKey[0],
                                                                                                   self.templateKey[1])
         if self.length:
-            return header + (";\r\n" + header).join([str(data) for data in self]) + ";"
+            return header + ("\n" + header).join([str(data) for data in self])
         else:
             return header + 'ParseError="Template not known (yet).";'

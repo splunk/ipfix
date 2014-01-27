@@ -35,7 +35,7 @@ debugLogger = SplunkLogger(DEBUG_LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
 if PROTOCOL.lower() == 'udp':
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((HOST, PORT))
-    sys.stderr.write("Waiting on UDP port:" + str(PORT) + "\n")
+    sys.stderr.write("Waiting on UDP {}:{}\n".format(HOST, PORT))
     while 1:
         #    The IPFIX Message Header 16-bit Length field limits the length of an
         #    IPFIX Message to 65535 octets, including the header.  A Collecting
