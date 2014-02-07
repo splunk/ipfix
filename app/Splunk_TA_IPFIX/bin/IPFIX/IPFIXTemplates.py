@@ -296,8 +296,11 @@ for root, dirs, files in walk(TEMPLATE_PATH):
                     registration_rule = spec.getroot().findtext(".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}registration_rule")
                     enterpriseId = int(registration_rule)
                 except Exception, e:
-                    logging.warn("No enterprise ID for " + fileSource + ": " + str(e))
-                    enterpriseId = 0
+                    try:
+                        enterpriseId = int(path.split(path.splitext(filename)[0])[1])
+                    except Exception, e:
+                        enterpriseId = 0
+                        pass
                     pass
             ## The ipfix might have lots of registries, the one we care about is the ipfix information elements registry
             records = spec.getroot().findall(
@@ -308,11 +311,11 @@ for root, dirs, files in walk(TEMPLATE_PATH):
                     "{}:{}".format(enterpriseId, record.findtext('{http://www.iana.org/assignments}elementId'))] = \
                     TemplateField(
                         elementId=record.findtext('{http://www.iana.org/assignments}elementId'),
-                        enterpriseId=enterpriseId,
+                        enterpriseId=record.findtext('{http://www.iana.org/assignments}enterpriseId') or enterpriseId,
                         name=record.findtext('{http://www.iana.org/assignments}name'),
                         dataTypeName=record.findtext('{http://www.iana.org/assignments}dataType'),
                         dataTypeSemantics=record.findtext('{http://www.iana.org/assignments}dataTypeSemantics')
-                )
+                    )
 
 
 def test():
