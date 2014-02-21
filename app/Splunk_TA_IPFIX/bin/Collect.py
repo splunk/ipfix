@@ -5,6 +5,7 @@ import os
 import sys
 import socket
 import ConfigParser
+import logging
 
 from IPFIX import *
 from SplunkLogger import *
@@ -15,6 +16,7 @@ if not "SPLUNK_HOME" in os.environ:
     APP_PATH = os.path.abspath('..')
 else:
     APP_PATH = os.path.join(os.environ["SPLUNK_HOME"], 'etc', 'apps', 'Splunk_TA_IPFIX')
+
 CONFIG_FILE = os.path.join(APP_PATH, 'default', 'ipfix.conf'), os.path.join(APP_PATH, 'local', 'ipfix.conf')
 LOG_FILENAME = os.path.join(APP_PATH, 'log', 'appflow.log')
 DEBUG_LOG_FILENAME = os.path.join(APP_PATH, 'log', 'debug.log')
@@ -23,17 +25,26 @@ DEBUG_LOG_FILENAME = os.path.join(APP_PATH, 'log', 'debug.log')
 Config = ConfigParser.ConfigParser()
 Config.read(CONFIG_FILE)
 HOST = Config.get('network', 'host')
-PORT = int(Config.get('network', 'port'))
+PORT = Config.getint('network', 'port')
 PROTOCOL = Config.get('network', 'protocol')
+
+# These two options are how we mitigate disk IO and network bursts
+BUFFER_BYTES = Config.getint('network','buffer')
+LEVEL = Config.get('logging', 'level')
+LOG_LEVEL = logging.getLevelName(LEVEL)
+
+# These two options control file log rotation
 MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
 
 splunkLogger = SplunkLogger(LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
 debugLogger = SplunkLogger(DEBUG_LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
+debugLogger.setLevel(LOG_LEVEL)
 
 # Currently, only support UDP
 if PROTOCOL.lower() == 'udp':
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, BUFFER_BYTES)
     s.bind((HOST, PORT))
     sys.stderr.write("Waiting on UDP {}:{}\n".format(HOST, PORT))
     while 1:
