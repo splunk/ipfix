@@ -3,13 +3,14 @@ __author__ = 'Joel Bennett'
 
 from os import path, environ
 import sys
+from time import time
 from struct import unpack
 from ConfigParser import ConfigParser
 from PcapReader import PcapReader
 
 from IPFIX import *
 from SplunkLogger import *
-
+import logging
 
 ## For testing purposes. The following THREE lines.
 if not "SPLUNK_HOME" in environ:
@@ -38,6 +39,11 @@ captureFile = Config.get('testing', 'file')
 pkts = PcapReader(captureFile)
 
 # For each packet in the pcap file, extract, decode and print AppFlow IPFIX records.
+
+# NOTE: for testing, we want high log output (unless we care about speed)
+debugLogger.setLevel(logging.WARNING)
+f1 = time()
+
 for p in pkts:
     # assume layer 2 is Ethernet
     l3type = unpack(">H", p[12:14])[0]
@@ -63,9 +69,19 @@ for p in pkts:
 
     if dst_port == PORT:
         addr = ['unknown', src_port]
+
+        t1 = time()
         ipfix = Parser(data, addr, logger=debugLogger)
         if ipfix.data:
             splunkLogger.info(str(ipfix))
 
+        t2 = time()
+        print 'Parser + logging took:  %0.3f ms' % ((t2-t1)*1000.0)
+
     else:
         debugLogger.info("DISCARD: Data to wrong port {0} observer='{1}' data='{2}'".format(dst_port, src_port, data.encode('hex')))
+
+
+f2 = time()
+
+print 'Full execution:  %0.3f ms' % ((f2-f1)*1000.0)
