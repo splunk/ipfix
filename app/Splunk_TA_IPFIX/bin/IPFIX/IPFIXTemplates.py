@@ -174,7 +174,7 @@ class TemplateSet(object):
             _next = 0
             while _next < self.length:
                 template = Template(rawData[_next:], logger=logger)
-                logger.info(str(template))
+                logger.debug(str(template))
                 self.templates[template.id] = template
                 _next += template.length
 

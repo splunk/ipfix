@@ -55,7 +55,7 @@ class Data:
                 #    discard that Information Element from the Flow Record.
                 # NOTE: we only parse variable-length strings, because those are identifiable by the length == 65535
                 #       but we do not discard anything anymore. we display it as hex below...
-                logger.error(
+                logger.warn(
                     "Have not implemented parsing for '{}' of length {} ({}:{}) which is needed for template {}.".format(
                         field.dataTypeName, field.length, field.enterpriseId, field.id, template.id))
 
@@ -139,7 +139,7 @@ class DataSet:
         self.length = 0
         self.minRecordSize = 0
         if not self.template:
-            # TODO: in UDP mode we should store this data until we do get the template
+            # TODO: in UDP mode we should probably store this data until we do get the template
             logger.warn(
                 "{}: Can't parse data set with Template ID: {} and Template Key: {} without a template. Data: {}".format(
                     timestamp, templateId, templateKey, rawData.encode("hex")))
