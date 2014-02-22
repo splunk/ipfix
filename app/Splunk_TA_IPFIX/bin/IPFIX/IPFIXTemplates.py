@@ -2,8 +2,9 @@
 __author__ = 'Joel Bennett'
 from struct import unpack
 from os import path, walk, environ, getpid
-import xml.etree.cElementTree as ElementTree
+from IPFIX import TEMPLATE_PATH
 
+import xml.etree.cElementTree as ElementTree
 import logging
 import traceback
 
@@ -269,14 +270,6 @@ def flatten(items, name=None):
                 yield getattr(el, name)
             else:
                 yield el
-
-## Load the default ipfix.xml and our handmade netscaler.xml
-if not "SPLUNK_HOME" in environ:
-    TEMPLATE_PATH = path.abspath(path.join(path.dirname(path.abspath(__file__)), 'information-elements'))
-else:
-    APP_PATH = path.join(environ["SPLUNK_HOME"], 'etc', 'apps', 'Splunk_TA_IPFIX')
-    TEMPLATE_PATH = path.abspath(path.join(APP_PATH, 'bin', 'IPFIX', 'information-elements'))
-
 
 for root, dirs, files in walk(TEMPLATE_PATH):
     for filename in files:

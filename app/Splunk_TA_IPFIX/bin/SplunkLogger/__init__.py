@@ -1,3 +1,5 @@
+__author__ = 'JBennett'
+
 #!/usr/bin/env python
 __author__ = 'Joel Bennett'
 import logging

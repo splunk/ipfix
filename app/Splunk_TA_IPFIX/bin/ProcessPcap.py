@@ -12,27 +12,24 @@ from IPFIX import *
 from SplunkLogger import *
 import logging
 
-## For testing purposes. The following THREE lines.
-if not "SPLUNK_HOME" in environ:
-    APP_PATH = path.abspath('..')
-else:
-    APP_PATH = path.join(environ["SPLUNK_HOME"], 'etc', 'apps', 'Splunk_TA_IPFIX')
-CONFIG_FILE = path.join(APP_PATH, 'default', 'ipfix.conf'), path.join(APP_PATH, 'local', 'ipfix.conf')
-LOG_FILENAME = path.join(APP_PATH, 'log', 'appflow.log')
-DEBUG_LOG_FILENAME = path.join(APP_PATH, 'log', 'debug.log')
+from IPFIX import Parser, MODULE_PATH
+
+# We assume that the MODULE is inside the /bin/ of an app
+APP_PATH = path.dirname(path.dirname(MODULE_PATH))
+LOG_PATH = path.join(APP_PATH, 'log')
+CONFIG_FILE = path.join(APP_PATH, 'default', 'ipfix.conf'), \
+              path.join(APP_PATH, 'local', 'ipfix.conf')
 
 # Read config file
 Config = ConfigParser()
 Config.read(CONFIG_FILE)
-PROTOCOL = 'pcap'
 HOST = Config.get('network', 'host')
 PORT = Config.getint('network', 'port')
-PROTOCOL = Config.get('network', 'protocol')
 MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
 
-splunkLogger = SplunkLogger(LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
-debugLogger = SplunkLogger(DEBUG_LOG_FILENAME, MAX_BYTES, BACKUP_COUNT)
+splunkLogger = SplunkLogger(path.join(LOG_PATH, 'appflow.log'), MAX_BYTES, BACKUP_COUNT)
+debugLogger = SplunkLogger(path.join(LOG_PATH, 'debug.log'), MAX_BYTES, BACKUP_COUNT)
 
 # ProcessPcap is about testing, we're reading a previously captured .pcap file
 captureFile = Config.get('testing', 'file')
