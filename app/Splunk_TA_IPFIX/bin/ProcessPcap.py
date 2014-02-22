@@ -27,6 +27,7 @@ HOST = Config.get('network', 'host')
 PORT = Config.getint('network', 'port')
 MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
+BUFFER_OUTPUT = Config.getboolean('logging','useFileForOutput')
 
 splunkLogger = SplunkLogger(path.join(LOG_PATH, 'appflow.log'), MAX_BYTES, BACKUP_COUNT)
 debugLogger = SplunkLogger(path.join(LOG_PATH, 'debug.log'), MAX_BYTES, BACKUP_COUNT)
@@ -70,7 +71,10 @@ for p in pkts:
         t1 = time()
         ipfix = Parser(data, addr, logger=debugLogger)
         if ipfix.data:
-            splunkLogger.info(str(ipfix))
+            if BUFFER_OUTPUT:
+                splunkLogger.info(str(ipfix))
+            else:
+                print str(ipfix)
 
         t2 = time()
         print 'Parser + logging took:  %0.3f ms' % ((t2-t1)*1000.0)

@@ -30,10 +30,11 @@ LEVEL = Config.get('logging', 'level')
 LOG_LEVEL = logging.getLevelName(LEVEL)
 
 # These two options control file log rotation
+BUFFER_OUTPUT = Config.getboolean('logging','useFileForOutput')
 MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
 
-splunkLogger = SplunkLogger(path.join(LOG_PATH, 'appflow.log'), MAX_BYTES, BACKUP_COUNT)
+splunkLogger = SplunkLogger(path.join(LOG_PATH, 'output.log'), MAX_BYTES, BACKUP_COUNT)
 debugLogger = SplunkLogger(path.join(LOG_PATH, 'debug.log'), MAX_BYTES, BACKUP_COUNT)
 debugLogger.setLevel(LOG_LEVEL)
 
@@ -50,7 +51,11 @@ if PROTOCOL.lower() == 'udp':
         data, addr = s.recvfrom(65535)
         ipfix = Parser(data, addr, logger=debugLogger)
         if ipfix.data:
-            splunkLogger.info(str(ipfix))
+            if BUFFER_OUTPUT:
+                splunkLogger.info(str(ipfix))
+            else:
+                print str(ipfix)
+
 else:
     sys.stderr.write("ERROR! Unsupported protocol: " + str(PROTOCOL) + "\nexiting...")
     sys.exit(1)
