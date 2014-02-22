@@ -29,7 +29,7 @@ MAX_BYTES = Config.getint('logging', 'maxBytes')
 BACKUP_COUNT = Config.getint('logging', 'backupCount')
 BUFFER_OUTPUT = Config.getboolean('logging','useFileForOutput')
 
-splunkLogger = SplunkLogger(path.join(LOG_PATH, 'appflow.log'), MAX_BYTES, BACKUP_COUNT)
+splunkLogger = SplunkLogger(path.join(LOG_PATH, 'output.log'), MAX_BYTES, BACKUP_COUNT)
 debugLogger = SplunkLogger(path.join(LOG_PATH, 'debug.log'), MAX_BYTES, BACKUP_COUNT)
 
 # ProcessPcap is about testing, we're reading a previously captured .pcap file
