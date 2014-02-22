@@ -127,8 +127,9 @@ class Data:
 
 
 class DataSet:
-    def __init__(self, templateKey, templateId, timestamp, rawData, logger=logging):
+    def __init__(self, templateKey, sequenceId, templateId, timestamp, rawData, logger=logging):
         self.templateKey = templateKey
+        self.sequenceId = sequenceId
         self.templateId = templateId
         self.logger = logger
         self.template = TemplateSet.getTemplateSafe(templateKey, templateId)
@@ -174,11 +175,8 @@ class DataSet:
         return data
 
     def __str__(self):
-        header = 'TimeStamp="{}"; Template="{}"; Observer="{}"; Address="{}"; Port="{}"; '.format(self.timestamp,
-                                                                                                  self.templateId,
-                                                                                                  self.templateKey[2],
-                                                                                                  self.templateKey[0],
-                                                                                                  self.templateKey[1])
+        header = 'TimeStamp="{}"; Sequence="{}"; Template="{}"; Observer="{}"; Address="{}"; Port="{}"; '.format(
+                self.timestamp, self.sequenceId, self.templateId, self.templateKey[2], self.templateKey[0], self.templateKey[1])
         if self.length:
             return header + ("\n" + header).join([str(data) for data in self])
         else:

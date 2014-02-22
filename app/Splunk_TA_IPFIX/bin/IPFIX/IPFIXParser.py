@@ -41,7 +41,7 @@ class Parser:
             if setId > 255:
                 # Need to wrap IPFIXDataSet in [] to ensure it doesn't unroll,
                 # This way we end up with .data being an array of sets
-                self.data += [DataSet(self.templateKey, setId, self.timestamp, rawData[setStart + 4: setStart + setLength], logger=logger)]
+                self.data += [DataSet(self.templateKey, self.sequence, setId, self.timestamp, rawData[setStart + 4: setStart + setLength], logger=logger)]
                 ## For debugging, collect a few records in the error logs:
                 # logger.info("<IPFIXData length='{length}' address='{address}:{port}' observer='{observer}'>{data}</IPFIXData>".format(
                 #     address=address[0], port=address[1], observer=self.observerId, length=setLength - 4,
