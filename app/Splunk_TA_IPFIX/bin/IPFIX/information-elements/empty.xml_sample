@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ipfix.xsl"?>
+<?oxygen RNGSchema="ipfix.rng" type="xml"?>
+<registry xmlns="http://www.iana.org/assignments" id="ipfix">
+    <registry id="ipfix-information-elements" >
+        <record>
+            <name>packetDeltaCount</name>
+            <dataType>unsigned64</dataType>
+            <elementId>2</elementId>
+            <units>packets</units>
+            <!-- I'm not sure how these should be used by a program -->
+            <dataTypeSemantics>deltaCounter</dataTypeSemantics>
+            <group>flowCounter</group>
+            <applicability>data</applicability>
+            <!-- These are clearly for humans only -->
+            <status>current</status>
+            <description>
+            <paragraph>
+            The number of incoming packets since the previous report
+            (if any) for this Flow at the Observation Point.
+            </paragraph>
+            </description>
+            <xref type="rfc" data="rfc5102"/>
+            <!-- beware, here be dragons -->
+            <revision>0</revision>
+            <date>2013-02-18</date>
+        </record>
+        <registry id="a-a" />
+        <registry id="a-b" />
+        <registry id="a-c" />
+    </registry>
+    <registry id="b" />
+    <registry id="c" />
+    <registry id="d" />
+    <registry id="e" />
+    <registry id="f" />
+    <registry id="g" />
+    <people />
+</registry>
