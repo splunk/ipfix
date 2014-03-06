@@ -3,6 +3,7 @@ import calendar
 import datetime
 from struct import unpack
 
+__all__ = ["ntop","NtpTime"]
 
 def ntop(address_family, ipAddress):
     """

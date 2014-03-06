@@ -271,20 +271,40 @@ def flatten(items, name=None):
             else:
                 yield el
 
+import re
+_iespec_re = re.compile("^(?P<name>\w+)\((?:(?P<pen>\d+)/)?(?P<id>\d+)\)<(?P<type>\w+)>(?:\[(?P<size>\d+)\])?")
+
 for root, dirs, files in walk(TEMPLATE_PATH):
     for filename in files:
         enterpriseId = 0
         name, ext = filename.split('.')
-        if ext == 'xml':
-            fileSource = path.join(TEMPLATE_PATH, filename)
+        fileSource = path.join(TEMPLATE_PATH, filename)
 
+        if ext == 'iespec':
+            with open(fileSource) as f:
+                for line in f:
+                    match = _iespec_re.match(line)
+                    if match is None:
+                        logging.error("{} - invalid iespec line: {}".format(fileSource, line))
+                    else:
+                        record = match.groupdict()
+
+                        TemplateField.elements[
+                            "{}:{}".format(record['pen'] or 0, record['id'])] = \
+                            TemplateField(
+                                elementId=record['id'],
+                                enterpriseId=record['pen'] or 0,
+                                name=record['name'],
+                                dataTypeName=record['type']
+                        )
+        elif ext == 'xml':
             try:
                 spec = ElementTree.parse(fileSource)
             except Exception, e:
                 logging.error("Unable to parse XML for " + fileSource + ": " + str(e))
                 continue
 
-            if filename != "ipfix.xml":
+            if name != "iana":
                 try:
                     registration_rule = spec.getroot().findtext(".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}registration_rule")
                     enterpriseId = int(registration_rule)
