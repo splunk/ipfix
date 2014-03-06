@@ -2,53 +2,52 @@
 <?xml-stylesheet type="text/xsl" href="ipfix.xsl"?>
 <?oxygen RNGSchema="ipfix.rng" type="xml"?>
 <registry xmlns="http://www.iana.org/assignments" id="ipfix">
-<title>IP Flow Information Export (IPFIX) Entities</title>
-<created>2007-05-10</created>
-<updated>2013-09-18</updated>
+    <title>IP Flow Information Export (IPFIX) Entities</title>
+    <created>2007-05-10</created>
+    <updated>2013-09-18</updated>
 
-<note><xref type="rfc" data="rfc7012"/> has obsoleted <xref type="rfc" data="rfc5102"/>. However, references to <xref type="rfc" data="rfc5102"/>
-remain as part of the historical record.</note>
+    <note><xref type="rfc" data="rfc7012"/> has obsoleted <xref type="rfc" data="rfc5102"/>. However, references to <xref type="rfc" data="rfc5102"/> remain as part of the historical record.</note>
 
-<registry id="ipfix-information-elements">
-<title>IPFIX Information Elements</title>
-<registration_rule>Expert Review</registration_rule>
-<expert>IE Doctors</expert>
-<xref type="rfc" data="rfc7012"/>
-<note>Values 0-127: NFv9-compatible</note>
+    <registry id="ipfix-information-elements">
+        <title>IPFIX Information Elements</title>
+        <registration_rule>Expert Review</registration_rule>
+        <expert>IE Doctors</expert>
+        <xref type="rfc" data="rfc7012"/>
+        <note>Values 0-127: NFv9-compatible</note>
 
-<record>
-<name>Reserved</name>
-<elementId>0</elementId>
-<description/>
-<references>
-<paragraph>
-</paragraph>
-</references>
-<xref type="rfc" data="rfc5102"/>
-<revision/>
-<date>2013-02-18</date>
-</record>
+        <record>
+            <name>Reserved</name>
+            <elementId>0</elementId>
+            <description/>
+            <references>
+            <paragraph>
+            </paragraph>
+            </references>
+            <xref type="rfc" data="rfc5102"/>
+            <revision/>
+            <date>2013-02-18</date>
+        </record>
 
-<record>
-<name>octetDeltaCount</name>
-<dataType>unsigned64</dataType>
-<group>flowCounter</group>
-<dataTypeSemantics>deltaCounter</dataTypeSemantics>
-<elementId>1</elementId>
-<applicability>data</applicability>
-<status>current</status>
-<description>
-<paragraph>
-The number of octets since the previous report (if any)
-in incoming packets for this Flow at the Observation Point.
-The number of octets includes IP header(s) and IP payload.
-</paragraph>
-</description>
-<units>octets</units>
-<xref type="rfc" data="rfc5102"/>
-<revision>0</revision>
-<date>2013-02-18</date>
-</record>
+        <record>
+            <name>octetDeltaCount</name>
+            <dataType>unsigned64</dataType>
+            <!--<group>flowCounter</group>-->
+            <dataTypeSemantics>deltaCounter</dataTypeSemantics>
+            <elementId>1</elementId>
+            <!--<applicability>data</applicability>-->
+            <status>current</status>
+            <description>
+            <paragraph>
+            The number of octets since the previous report (if any)
+            in incoming packets for this Flow at the Observation Point.
+            The number of octets includes IP header(s) and IP payload.
+            </paragraph>
+            </description>
+            <!--<units>octets</units>-->
+            <!--<xref type="rfc" data="rfc5102"/>-->
+            <!--<revision>0</revision>-->
+            <!--<date>2013-02-18</date>-->
+        </record>
 
 <record>
 <name>packetDeltaCount</name>
@@ -1068,8 +1067,8 @@ IPv4 source address prefix.
 <description>
 <paragraph>
 This field identifies the control protocol that allocated the
-top-of-stack label.  Values for this field are listed in the 
-MPLS label type registry. See 
+top-of-stack label.  Values for this field are listed in the
+MPLS label type registry. See
 <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xml#ipfix-mpls-label-type"/>
 </paragraph>
 </description>
@@ -1489,8 +1488,8 @@ authentication header.
 See <xref type="rfc" data="rfc4303"/> for the specification of the
 encapsulating security payload.
 
-The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.  
-The diagram in this registry is taken from Errata 1738. See <xref type="rfc-errata" data="1738"/>       
+The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.
+The diagram in this registry is taken from Errata 1738. See <xref type="rfc-errata" data="1738"/>
 </paragraph>
 </references>
 <xref type="rfc" data="rfc5102"/>
@@ -1878,7 +1877,7 @@ See <xref type="rfc" data="rfc2863"/> for the definition of the ifName object.
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
+</record>
 
 <record>
 <name>interfaceDescription</name>
@@ -1887,7 +1886,7 @@ See <xref type="rfc" data="rfc2863"/> for the definition of the ifName object.
 <status>current</status>
 <description>
 <paragraph>
-The description of an interface, eg "FastEthernet 1/0" or "ISP 
+The description of an interface, eg "FastEthernet 1/0" or "ISP
 connection".
 </paragraph>
 </description>
@@ -2066,14 +2065,14 @@ the MPLS top label will cause the Flow to be forwarded to.
 <range>0-32</range>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc3031"/> for the association between 
+See <xref type="rfc" data="rfc3031"/> for the association between
 MPLS labels and prefix lengths.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
+</record>
 
 <record>
 <name>Assigned for NetFlow v9 compatibility</name>
@@ -2168,22 +2167,22 @@ Specifies the name of an application.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'ipDiffServCodePoint', except 
-that it reports a potentially modified value caused by a 
-middlebox function after the packet passed the Observation 
+The definition of this Information Element is identical to the
+definition of Information Element 'ipDiffServCodePoint', except
+that it reports a potentially modified value caused by a
+middlebox function after the packet passed the Observation
 Point.
 </paragraph>
 </description>
 <range>0-63</range>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc3260"/> for the definition of the Differentiated 
-Services Field.  See section 5.3.2 of <xref type="rfc" data="rfc1812"/> and 
-<xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.  See 
-<xref type="rfc" data="rfc2460"/> for the definition of the IPv6 Traffic Class 
-field.  See the IPFIX Information Model <xref type="rfc" data="rfc5102"/> for the 
-'ipDiffServCodePoint' specification.  
+See <xref type="rfc" data="rfc3260"/> for the definition of the Differentiated
+Services Field.  See section 5.3.2 of <xref type="rfc" data="rfc1812"/> and
+<xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.  See
+<xref type="rfc" data="rfc2460"/> for the definition of the IPv6 Traffic Class
+field.  See the IPFIX Information Model <xref type="rfc" data="rfc5102"/> for the
+'ipDiffServCodePoint' specification.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -2199,15 +2198,15 @@ field.  See the IPFIX Information Model <xref type="rfc" data="rfc5102"/> for th
 <status>current</status>
 <description>
 <paragraph>
-The amount of multicast replication that's applied to a traffic 
+The amount of multicast replication that's applied to a traffic
 stream.
 </paragraph>
 </description>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc1112"/> for the specification of reserved IPv4 
-multicast addresses.  See <xref type="rfc" data="rfc4291"/> for the 
-specification of reserved IPv6 multicast addresses. 
+See <xref type="rfc" data="rfc1112"/> for the specification of reserved IPv4
+multicast addresses.  See <xref type="rfc" data="rfc4291"/> for the
+specification of reserved IPv6 multicast addresses.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -2244,7 +2243,7 @@ application assignments.
 </paragraph>
 <paragraph>
 Values for this field are listed in the Classification
-Engine IDs registry. See 
+Engine IDs registry. See
 <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xml#classification-engine-ids"/>
 </paragraph>
 </description>
@@ -4240,7 +4239,7 @@ reserved IPv4 multicast addresses.
 See <xref type="rfc" data="rfc4291"/> for the specification of
 reserved IPv6 multicast addresses and the definition of the T flag and
 the IPv6 multicast scope.
-The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.  
+The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.
 The diagram in this registry is taken from Errata 1736. See <xref type="rfc-errata" data="1736"/>
 </paragraph>
 </references>
@@ -4372,8 +4371,8 @@ may be assigned by IANA
 See <xref type="rfc" data="rfc791"/> for the definition of IPv4
 options.
 See the list of IPv4 option numbers assigned by IANA at <xref type="registry" data="ip-parameters"/>.
-The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.  
-The diagram in this registry is taken from Errata 1737. See <xref type="rfc-errata" data="1737"/>   
+The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.
+The diagram in this registry is taken from Errata 1737. See <xref type="rfc-errata" data="1737"/>
 </paragraph>
 </references>
 <xref type="rfc" data="rfc5102"/>
@@ -4434,7 +4433,7 @@ TCP option numbers are maintained by IANA.
 See <xref type="rfc" data="rfc793"/> for the definition of TCP
 options.
 See the list of TCP option numbers assigned by IANA at <xref type="registry" data="tcp-parameters"/>.
-The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.  
+The diagram provided in <xref type="rfc" data="rfc5102"/> is incorrect.
 The diagram in this registry is taken from Errata 1739. See <xref type="rfc-errata" data="1739"/>
 </paragraph>
 </references>
@@ -4865,23 +4864,23 @@ IPv6 jumbo payload length.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'sourceIPv4Address', except 
-that it reports a modified value caused by a NAT middlebox 
+The definition of this Information Element is identical to the
+definition of Information Element 'sourceIPv4Address', except
+that it reports a modified value caused by a NAT middlebox
 function after the packet passed the Observation Point.
 </paragraph>
 </description>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 source 
-address field.  See <xref type="rfc" data="rfc3022"/> for the definition of 
-NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. 
+See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 source
+address field.  See <xref type="rfc" data="rfc3022"/> for the definition of
+NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record>   
+</record>
 <record>
 <name>postNATDestinationIPv4Address</name>
 <dataType>ipv4Address</dataType>
@@ -4890,18 +4889,18 @@ NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'destinationIPv4Address', 
-except that it reports a modified value caused by a NAT 
-middlebox function after the packet passed the Observation 
+The definition of this Information Element is identical to the
+definition of Information Element 'destinationIPv4Address',
+except that it reports a modified value caused by a NAT
+middlebox function after the packet passed the Observation
 Point.
 </paragraph>
 </description>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 destination 
-address field.  See <xref type="rfc" data="rfc3022"/> for the definition of 
-NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. 
+See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 destination
+address field.  See <xref type="rfc" data="rfc3022"/> for the definition of
+NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -4917,22 +4916,22 @@ NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'sourceTransportPort', except 
-that it reports a modified value caused by a Network Address 
-Port Translation (NAPT) middlebox function after the packet 
+The definition of this Information Element is identical to the
+definition of Information Element 'sourceTransportPort', except
+that it reports a modified value caused by a Network Address
+Port Translation (NAPT) middlebox function after the packet
 passed the Observation Point.
 </paragraph>
 </description>
 <references>
 <paragraph>
-See <xref type="rfc" data="rfc768"/> for the definition of the UDP source port 
-field.  See <xref type="rfc" data="rfc793"/> for the definition of the TCP 
-source port field.  See <xref type="rfc" data="rfc4960"/> for the definition of 
-SCTP.     
-See <xref type="rfc" data="rfc3022"/> for the definition of NAPT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. 
-Additional information on defined UDP and TCP port numbers can 
-be found at http://www.iana.org/assignments/port-numbers.   
+See <xref type="rfc" data="rfc768"/> for the definition of the UDP source port
+field.  See <xref type="rfc" data="rfc793"/> for the definition of the TCP
+source port field.  See <xref type="rfc" data="rfc4960"/> for the definition of
+SCTP.
+See <xref type="rfc" data="rfc3022"/> for the definition of NAPT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+Additional information on defined UDP and TCP port numbers can
+be found at http://www.iana.org/assignments/port-numbers.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -4948,22 +4947,22 @@ be found at http://www.iana.org/assignments/port-numbers.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'destinationTransportPort', 
-except that it reports a modified value caused by a Network 
-Address Port Translation (NAPT) middlebox function after the 
-packet passed the Observation Point. 
+The definition of this Information Element is identical to the
+definition of Information Element 'destinationTransportPort',
+except that it reports a modified value caused by a Network
+Address Port Translation (NAPT) middlebox function after the
+packet passed the Observation Point.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-See <xref type="rfc" data="rfc768"/> for the definition of the UDP source port 
-field.  See <xref type="rfc" data="rfc793"/> for the definition of the TCP 
-source port field.  See <xref type="rfc" data="rfc4960"/> for the definition of 
-SCTP.     
-See <xref type="rfc" data="rfc3022"/> for the definition of NAPT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. 
-Additional information on defined UDP and TCP port numbers can 
-be found at <xref type="registry" data="service-names-port-numbers"/>.   
+<paragraph>
+See <xref type="rfc" data="rfc768"/> for the definition of the UDP source port
+field.  See <xref type="rfc" data="rfc793"/> for the definition of the TCP
+source port field.  See <xref type="rfc" data="rfc4960"/> for the definition of
+SCTP.
+See <xref type="rfc" data="rfc3022"/> for the definition of NAPT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+Additional information on defined UDP and TCP port numbers can
+be found at <xref type="registry" data="service-names-port-numbers"/>.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -4979,32 +4978,32 @@ be found at <xref type="registry" data="service-names-port-numbers"/>.
 <status>current</status>
 <description>
 <paragraph>
-Indicates whether the session was created because traffic 
-originated in the private or public address realm. 
-postNATSourceIPv4Address, postNATDestinationIPv4Address, 
-postNAPTSourceTransportPort, and 
-postNAPTDestinationTransportPort are qualified with the address 
-realm in perspective. 
+Indicates whether the session was created because traffic
+originated in the private or public address realm.
+postNATSourceIPv4Address, postNATDestinationIPv4Address,
+postNAPTSourceTransportPort, and
+postNAPTDestinationTransportPort are qualified with the address
+realm in perspective.
 </paragraph>
 <paragraph>
-The allowed values are: 
+The allowed values are:
 </paragraph>
 <paragraph>
-Private: 1 
+Private: 1
 </paragraph>
 <paragraph>
 Public:  2
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record>  
+</record>
 <record>
 <name>natEvent</name>
 <dataType>unsigned8</dataType>
@@ -5012,7 +5011,7 @@ See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 <status>current</status>
 <description>
 <paragraph>
-Indicates a NAT event. The allowed values are: 
+Indicates a NAT event. The allowed values are:
 </paragraph>
 <paragraph>
 1 - Create event.
@@ -5021,23 +5020,23 @@ Indicates a NAT event. The allowed values are:
 2 - Delete event.
 </paragraph>
 <paragraph>
-3 - Pool exhausted. 
+3 - Pool exhausted.
 </paragraph>
 <paragraph>
-A Create event is generated when a NAT translation is created, 
-whether dynamically or statically.  A Delete event is generated 
-when a NAT translation is deleted. 
+A Create event is generated when a NAT translation is created,
+whether dynamically or statically.  A Delete event is generated
+when a NAT translation is deleted.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record>  
+</record>
 <record>
 <name>initiatorOctets</name>
 <dataType>unsigned64</dataType>
@@ -5045,22 +5044,22 @@ See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 <status>current</status>
 <description>
 <paragraph>
-The total number of layer 4 payload bytes in a flow from the 
-initiator.  The initiator is the device which triggered the 
-session creation, and remains the same for the life of the 
-session.  
+The total number of layer 4 payload bytes in a flow from the
+initiator.  The initiator is the device which triggered the
+session creation, and remains the same for the life of the
+session.
 </paragraph>
 </description>
 <units>octets</units>
 <references>
-<paragraph>         
+<paragraph>
 See #298, initiatorPackets.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record>  
+</record>
 <record>
 <name>responderOctets</name>
 <dataType>unsigned64</dataType>
@@ -5068,14 +5067,14 @@ See #298, initiatorPackets.
 <status>current</status>
 <description>
 <paragraph>
-The total number of layer 4 payload bytes in a flow from the 
-responder.  The responder is the device which replies to the 
-initiator, and remains the same for the life of the session. 
+The total number of layer 4 payload bytes in a flow from the
+responder.  The responder is the device which replies to the
+initiator, and remains the same for the life of the session.
 </paragraph>
 </description>
 <units>octets</units>
-<references>      
-<paragraph>         
+<references>
+<paragraph>
 See #299, responderPackets.
 </paragraph>
 </references>
@@ -5092,25 +5091,25 @@ See #299, responderPackets.
 <status>current</status>
 <description>
 <paragraph>
-Indicates a firewall event.  The allowed values are: 
+Indicates a firewall event.  The allowed values are:
 </paragraph>
 <paragraph>
-0 - Ignore (invalid) 
+0 - Ignore (invalid)
 </paragraph>
 <paragraph>
-1 - Flow Created 
+1 - Flow Created
 </paragraph>
 <paragraph>
-2 - Flow Deleted 
+2 - Flow Deleted
 </paragraph>
 <paragraph>
 3 - Flow Denied
 </paragraph>
 <paragraph>
-4 - Flow Alert 
+4 - Flow Alert
 </paragraph>
 <paragraph>
-5 - Flow Update 
+5 - Flow Update
 </paragraph>
 </description>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -5125,9 +5124,9 @@ Indicates a firewall event.  The allowed values are:
 <status>current</status>
 <description>
 <paragraph>
-An unique identifier of the VRFname where the packets of this 
-flow are being received.  This identifier is unique per Metering 
-Process 
+An unique identifier of the VRFname where the packets of this
+flow are being received.  This identifier is unique per Metering
+Process
 </paragraph>
 </description>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -5142,9 +5141,9 @@ Process
 <status>current</status>
 <description>
 <paragraph>
-An unique identifier of the VRFname where the packets of this 
-flow are being sent.  This identifier is unique per Metering 
-Process 
+An unique identifier of the VRFname where the packets of this
+flow are being sent.  This identifier is unique per Metering
+Process
 </paragraph>
 </description>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -5159,11 +5158,11 @@ Process
 <status>current</status>
 <description>
 <paragraph>
-The name of a VPN Routing and Forwarding table (VRF). 
+The name of a VPN Routing and Forwarding table (VRF).
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc4364"/> for the definition of VRF.
 </paragraph>
 </references>
@@ -5285,16 +5284,16 @@ values:</paragraph>
 <status>current</status>
 <description>
 <paragraph>
-The difference between the length of an Ethernet frame (minus the 
-FCS) and the length of its MAC Client Data section (including any 
-padding) as defined in section 3.1 of [IEEE.802-3.2005].  It does 
-not include the Preamble, SFD and Extension field lengths.  
+The difference between the length of an Ethernet frame (minus the
+FCS) and the length of its MAC Client Data section (including any
+padding) as defined in section 3.1 of [IEEE.802-3.2005].  It does
+not include the Preamble, SFD and Extension field lengths.
 </paragraph>
 </description>
 <units>octets</units>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
+<paragraph>
+[IEEE.802-3.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -5310,21 +5309,21 @@ not include the Preamble, SFD and Extension field lengths.
 <status>current</status>
 <description>
 <paragraph>
-The length of the MAC Client Data section (including any padding) 
-of a frame as defined in section 3.1 of [IEEE.802-3.2005].  
+The length of the MAC Client Data section (including any padding)
+of a frame as defined in section 3.1 of [IEEE.802-3.2005].
 </paragraph>
 </description>
 <units>octets</units>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
+<paragraph>
+[IEEE.802-3.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>ethernetTotalLength</name>
 <dataType>unsigned16</dataType>
@@ -5333,22 +5332,22 @@ of a frame as defined in section 3.1 of [IEEE.802-3.2005].
 <status>current</status>
 <description>
 <paragraph>
-The total length of the Ethernet frame (excluding the Preamble, 
-SFD, Extension and FCS fields) as described in section 3.1 of 
-[IEEE.802-3.2005]. 
+The total length of the Ethernet frame (excluding the Preamble,
+SFD, Extension and FCS fields) as described in section 3.1 of
+[IEEE.802-3.2005].
 </paragraph>
 </description>
 <units>octets</units>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
+<paragraph>
+[IEEE.802-3.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>dot1qVlanId</name>
 <dataType>unsigned16</dataType>
@@ -5357,26 +5356,26 @@ SFD, Extension and FCS fields) as described in section 3.1 of
 <status>current</status>
 <description>
 <paragraph>
-The value of the 12-bit VLAN Identifier portion of the Tag 
-Control Information field of an Ethernet frame as described in 
-section 3.5.5 of [IEEE.802-3.2005].  The structure and semantics 
-within the Tag Control Information field are defined in IEEE 
-P802.1Q.  In case of a QinQ frame, it represents the outer tag's 
-VLAN identifier and in case of an IEEE 802.1ad frame it 
-represents the Service VLAN identifier in the S-TAG Tag Control 
-Information (TCI) field as described in [IEEE.802-1ad.2005]. 
+The value of the 12-bit VLAN Identifier portion of the Tag
+Control Information field of an Ethernet frame as described in
+section 3.5.5 of [IEEE.802-3.2005].  The structure and semantics
+within the Tag Control Information field are defined in IEEE
+P802.1Q.  In case of a QinQ frame, it represents the outer tag's
+VLAN identifier and in case of an IEEE 802.1ad frame it
+represents the Service VLAN identifier in the S-TAG Tag Control
+Information (TCI) field as described in [IEEE.802-1ad.2005].
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
+<paragraph>
+[IEEE.802-3.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>1</revision>
 <date>2013-06-25</date>
-</record> 
- 
+</record>
+
 <record>
 <name>dot1qPriority</name>
 <dataType>unsigned8</dataType>
@@ -5385,28 +5384,28 @@ Information (TCI) field as described in [IEEE.802-1ad.2005].
 <status>current</status>
 <description>
 <paragraph>
-The value of the 3-bit User Priority portion of the Tag Control 
-Information field of an Ethernet frame as described in section 
-3.5.5 of [IEEE.802-3.2005].  The structure and semantics within 
-the Tag Control Information field are defined in IEEE P802.1Q.  
-In case of a QinQ frame, it represents the outer tag's 3-bit 
-Class of Service (CoS) identifier and in case of an IEEE 802.1ad 
-frame it represents the 3-bit Priority Code Point (PCP) portion 
-of the S-TAG Tag Control Information (TCI) field as described in 
+The value of the 3-bit User Priority portion of the Tag Control
+Information field of an Ethernet frame as described in section
+3.5.5 of [IEEE.802-3.2005].  The structure and semantics within
+the Tag Control Information field are defined in IEEE P802.1Q.
+In case of a QinQ frame, it represents the outer tag's 3-bit
+Class of Service (CoS) identifier and in case of an IEEE 802.1ad
+frame it represents the 3-bit Priority Code Point (PCP) portion
+of the S-TAG Tag Control Information (TCI) field as described in
 [IEEE.802-1ad.2005].
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
-[IEEE.802-1ad.2005] 
+<paragraph>
+[IEEE.802-3.2005]
+[IEEE.802-1ad.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
- 
+</record>
+
 <record>
 <name>dot1qCustomerVlanId</name>
 <dataType>unsigned16</dataType>
@@ -5415,24 +5414,24 @@ of the S-TAG Tag Control Information (TCI) field as described in
 <status>current</status>
 <description>
 <paragraph>
-In case of a QinQ frame, it represents the inner tag's (*) VLAN 
-identifier and in case of an IEEE 802.1ad frame it represents the 
-Customer VLAN identifier in the C-TAG Tag Control Information 
-(TCI) field as described in [IEEE.802-1ad.2005]. 
-(*) Note: the 801.2Q tag directly following the outer one. 
+In case of a QinQ frame, it represents the inner tag's (*) VLAN
+identifier and in case of an IEEE 802.1ad frame it represents the
+Customer VLAN identifier in the C-TAG Tag Control Information
+(TCI) field as described in [IEEE.802-1ad.2005].
+(*) Note: the 801.2Q tag directly following the outer one.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-1ad.2005] 
+<paragraph>
+[IEEE.802-1ad.2005]
 [IEEE.802-1Q.2003]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
- 
+</record>
+
 <record>
 <name>dot1qCustomerPriority</name>
 <dataType>unsigned8</dataType>
@@ -5441,17 +5440,17 @@ Customer VLAN identifier in the C-TAG Tag Control Information
 <status>current</status>
 <description>
 <paragraph>
-In case of a QinQ frame, it represents the inner tag's (*) Class 
-of Service (CoS) identifier and in case of an IEEE 802.1ad frame 
-it represents the 3-bit Priority Code Point (PCP) portion of the 
-C-TAG Tag Control Information (TCI) field as described in 
-[IEEE.802-1ad.2005]. 
-(*) Note: the 801.2Q tag directly following the outer one. 
+In case of a QinQ frame, it represents the inner tag's (*) Class
+of Service (CoS) identifier and in case of an IEEE 802.1ad frame
+it represents the 3-bit Priority Code Point (PCP) portion of the
+C-TAG Tag Control Information (TCI) field as described in
+[IEEE.802-1ad.2005].
+(*) Note: the 801.2Q tag directly following the outer one.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-1ad.2005] 
+<paragraph>
+[IEEE.802-1ad.2005]
 [IEEE.802-1Q.2003]
 </paragraph>
 </references>
@@ -5459,7 +5458,7 @@ C-TAG Tag Control Information (TCI) field as described in
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>metroEvcId</name>
 <dataType>string</dataType>
@@ -5468,23 +5467,23 @@ C-TAG Tag Control Information (TCI) field as described in
 <status>current</status>
 <description>
 <paragraph>
-The EVC Service Attribute which uniquely identifies the Ethernet 
-Virtual Connection (EVC) within a Metro Ethernet Network, as 
-defined in section 6.2 of MEF 10.1.  The MetroEVCID is encoded in 
-a string of up to 100 characters.  
+The EVC Service Attribute which uniquely identifies the Ethernet
+Virtual Connection (EVC) within a Metro Ethernet Network, as
+defined in section 6.2 of MEF 10.1.  The MetroEVCID is encoded in
+a string of up to 100 characters.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-MEF 10.1 (Ethernet Services Attributes Phase 2) 
-MEF16 (Ethernet Local Management Interface) 
+<paragraph>
+MEF 10.1 (Ethernet Services Attributes Phase 2)
+MEF16 (Ethernet Local Management Interface)
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>1</revision>
 <date>2013-06-25</date>
 </record>
- 
+
 <record>
 <name>metroEvcType</name>
 <dataType>unsigned8</dataType>
@@ -5493,21 +5492,21 @@ MEF16 (Ethernet Local Management Interface)
 <status>current</status>
 <description>
 <paragraph>
-The 3-bit EVC Service Attribute which identifies the type of 
-service provided by an EVC. 
+The 3-bit EVC Service Attribute which identifies the type of
+service provided by an EVC.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-MEF 10.1 (Ethernet Services Attributes Phase 2)  
-MEF16 (Ethernet Local Management Interface) 
+<paragraph>
+MEF 10.1 (Ethernet Services Attributes Phase 2)
+MEF16 (Ethernet Local Management Interface)
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireId</name>
 <dataType>unsigned32</dataType>
@@ -5516,12 +5515,12 @@ MEF16 (Ethernet Local Management Interface)
 <status>current</status>
 <description>
 <paragraph>
-A 32-bit non-zero connection identifier, which together with the 
-pseudoWireType, identifies the Pseudo Wire (PW) as defined in <xref type="rfc" data="rfc4447"/>. 
+A 32-bit non-zero connection identifier, which together with the
+pseudoWireType, identifies the Pseudo Wire (PW) as defined in <xref type="rfc" data="rfc4447"/>.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc4447"/> for pseudowire definitions.
 </paragraph>
 </references>
@@ -5529,7 +5528,7 @@ See <xref type="rfc" data="rfc4447"/> for pseudowire definitions.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireType</name>
 <dataType>unsigned16</dataType>
@@ -5538,14 +5537,14 @@ See <xref type="rfc" data="rfc4447"/> for pseudowire definitions.
 <status>current</status>
 <description>
 <paragraph>
-The value of this information element identifies the type of MPLS 
+The value of this information element identifies the type of MPLS
 Pseudo Wire (PW) as defined in <xref type="rfc" data="rfc4446"/>.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-See <xref type="rfc" data="rfc4446"/> for the pseudowire type definition, and 
-http://www.iana.org/assignments/pwe3-parameters for the IANA 
+<paragraph>
+See <xref type="rfc" data="rfc4446"/> for the pseudowire type definition, and
+http://www.iana.org/assignments/pwe3-parameters for the IANA
 Pseudowire Types Registry.
 </paragraph>
 </references>
@@ -5553,7 +5552,7 @@ Pseudowire Types Registry.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireControlWord</name>
 <dataType>unsigned32</dataType>
@@ -5562,13 +5561,13 @@ Pseudowire Types Registry.
 <status>current</status>
 <description>
 <paragraph>
-The 32-bit Preferred Pseudo Wire (PW) MPLS Control Word as 
-defined in Section 3 of <xref type="rfc" data="rfc4385"/>. 
+The 32-bit Preferred Pseudo Wire (PW) MPLS Control Word as
+defined in Section 3 of <xref type="rfc" data="rfc4385"/>.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-See <xref type="rfc" data="rfc4385"/> for the Pseudo Wire Control Word 
+<paragraph>
+See <xref type="rfc" data="rfc4385"/> for the Pseudo Wire Control Word
 definition.
 </paragraph>
 </references>
@@ -5585,12 +5584,12 @@ definition.
 <status>current</status>
 <description>
 <paragraph>
-The index of a networking device's physical interface (example, a 
-switch port) where packets of this flow are being received. 
+The index of a networking device's physical interface (example, a
+switch port) where packets of this flow are being received.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc2863"/> for the definition of the ifIndex object.
 </paragraph>
 </references>
@@ -5607,12 +5606,12 @@ See <xref type="rfc" data="rfc2863"/> for the definition of the ifIndex object.
 <status>current</status>
 <description>
 <paragraph>
-The index of a networking device's physical interface (example, a 
-switch port) where packets of this flow are being sent. 
+The index of a networking device's physical interface (example, a
+switch port) where packets of this flow are being sent.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc2863"/> for the definition of the ifIndex object.
 </paragraph>
 </references>
@@ -5629,16 +5628,16 @@ See <xref type="rfc" data="rfc2863"/> for the definition of the ifIndex object.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'dot1qVlanId', except that it 
-reports a potentially modified value caused by a middlebox 
-function after the packet passed the Observation Point.  
+The definition of this Information Element is identical to the
+definition of Information Element 'dot1qVlanId', except that it
+reports a potentially modified value caused by a middlebox
+function after the packet passed the Observation Point.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
-[IEEE.802-1ad.2005] 
+<paragraph>
+[IEEE.802-3.2005]
+[IEEE.802-1ad.2005]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -5654,22 +5653,22 @@ function after the packet passed the Observation Point.
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the 
-definition of Information Element 'dot1qCustomerVlanId', except 
-that it reports a potentially modified value caused by a 
-middlebox function after the packet passed the Observation Point. 
+The definition of this Information Element is identical to the
+definition of Information Element 'dot1qCustomerVlanId', except
+that it reports a potentially modified value caused by a
+middlebox function after the packet passed the Observation Point.
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-1ad.2005] 
+<paragraph>
+[IEEE.802-1ad.2005]
 [IEEE.802-1Q.2003]
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
+</record>
 
 <record>
 <name>ethernetType</name>
@@ -5679,14 +5678,14 @@ middlebox function after the packet passed the Observation Point.
 <status>current</status>
 <description>
 <paragraph>
-The Ethernet type field of an Ethernet frame that identifies the 
-MAC client protocol carried in the payload as defined in 
-paragraph 1.4.349 of [IEEE.802-3.2005]. 
+The Ethernet type field of an Ethernet frame that identifies the
+MAC client protocol carried in the payload as defined in
+paragraph 1.4.349 of [IEEE.802-3.2005].
 </paragraph>
 </description>
 <references>
-<paragraph>         
-[IEEE.802-3.2005] 
+<paragraph>
+[IEEE.802-3.2005]
 Ethertype registry available at
 <xref type="uri" data="http://standards.ieee.org/regauth/ethertype/eth.txt"/>
 </paragraph>
@@ -5704,22 +5703,22 @@ Ethertype registry available at
 <status>current</status>
 <description>
 <paragraph>
-The definition of this Information Element is identical to the         
-definition of Information Element 'ipPrecedence', except that 
+The definition of this Information Element is identical to the
+definition of Information Element 'ipPrecedence', except that
 it reports a potentially modified value caused by a middlebox
 function after the packet passed the Observation Point.
 </paragraph>
 </description>
 <range>0-7</range>
 <references>
-<paragraph>         
-See <xref type="rfc" data="rfc1812"/> (Section 5.3.3) and 
+<paragraph>
+See <xref type="rfc" data="rfc1812"/> (Section 5.3.3) and
 <xref type="rfc" data="rfc791"/> for the definition of the
-IP Precedence. See <xref type="rfc" data="rfc1812"/> 
+IP Precedence. See <xref type="rfc" data="rfc1812"/>
 (Section 5.3.2) and <xref type="rfc" data="rfc791"/> for the
-definition of the IPv4 TOS field. See 
-<xref type="rfc" data="rfc2460"/> for the definition of the 
-IPv6 Traffic Class field. 
+definition of the IPv4 TOS field. See
+<xref type="rfc" data="rfc2460"/> for the definition of the
+IPv6 Traffic Class field.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -6136,17 +6135,17 @@ Element.
 <status>current</status>
 <description>
 <paragraph>
-The export reliability of Data Records, within this SCTP 
-stream, for the element(s) in the Options Template 
-scope.  A typical example of an element for which the 
-export reliability will be reported is the templateID, 
-as specified in the Data Records Reliability Options 
-Template.  A value of 'True' means that the Exporting 
-Process MUST send any Data Records associated with the 
-element(s) reliably within this SCTP stream.  A value of 
-'False' means that the Exporting Process MAY send any 
-Data Records associated with the element(s) unreliably 
-within this SCTP stream.     
+The export reliability of Data Records, within this SCTP
+stream, for the element(s) in the Options Template
+scope.  A typical example of an element for which the
+export reliability will be reported is the templateID,
+as specified in the Data Records Reliability Options
+Template.  A value of 'True' means that the Exporting
+Process MUST send any Data Records associated with the
+element(s) reliably within this SCTP stream.  A value of
+'False' means that the Exporting Process MAY send any
+Data Records associated with the element(s) unreliably
+within this SCTP stream.
 </paragraph>
 </description>
 <xref type="rfc" data="rfc6526"/>
@@ -6333,7 +6332,7 @@ anonymizationFlags IE
 | 0)     |          |                                               |
 +--------+----------+-----------------------------------------------+
 | 0-1    | SC       | Stability Class: see the Stability Class      |
-|        |          | table below, and section Section 5.1.         | 
+|        |          | table below, and section Section 5.1.         |
 | 2      | PmA      | Perimeter Anonymization: when set (1),        |
 |        |          | source- Information Elements as described in  |
 |        |          | [RFC5103] are interpreted as external         |
@@ -6497,7 +6496,7 @@ these restrictions are noted in the table below.
 |       | exported are anonymized   |                 |             |
 |       | by adding a single offset |                 |             |
 |       | to all values.            |                 |             |
-+-------+---------------------------+-----------------+-------------+ 
++-------+---------------------------+-----------------+-------------+
 </artwork>
 </description>
 <xref type="rfc" data="rfc6235"/>
@@ -6530,10 +6529,10 @@ multiple identical Information Elements.</paragraph>
 <status>current</status>
 <description>
 <paragraph>Specifies if the Application ID is based on peer-to-peer
-technology. 
+technology.
 </paragraph>
 <paragraph>
-Possible values are: { "yes", "y", 1 }, 
+Possible values are: { "yes", "y", 1 },
 { "no", "n", 2 } and { "unassigned", "u", 0 }.
 </paragraph>
 </description>
@@ -6552,7 +6551,7 @@ Possible values are: { "yes", "y", 1 },
 <paragraph>Specifies if the Application ID is used as a tunnel technology.
 </paragraph>
 <paragraph>
-Possible values are: { "yes", "y", 1 }, { "no", "n", 2 } and 
+Possible values are: { "yes", "y", 1 }, { "no", "n", 2 } and
 { "unassigned", "u", 0 }.
 </paragraph>
 </description>
@@ -6569,9 +6568,9 @@ Possible values are: { "yes", "y", 1 }, { "no", "n", 2 } and
 <status>current</status>
 <description>
 <paragraph>Specifies if the Application ID is an encrypted networking
-protocol. 
+protocol.
 </paragraph>
-<paragraph>Possible values are: { "yes", "y", 1 }, 
+<paragraph>Possible values are: { "yes", "y", 1 },
 { "no", "n", 2 } and { "unassigned", "u", 0 }.
 </paragraph>
 </description>
@@ -6644,12 +6643,12 @@ This element describes the "validity state" of the BGP route correspondent sourc
 </paragraph>
 </description>
 <references>
-<paragraph>         
-See <xref type="rfc" data="rfc4271"/> for a description of BGP-4, 
+<paragraph>
+See <xref type="rfc" data="rfc4271"/> for a description of BGP-4,
 <xref type="rfc" data="rfc6811"/> for the
-definition of "validity states" and 
-<xref type="draft" data="draft-ietf-sidr-origin-validation-signaling"/> 
-for the encoding of those "validity states". 
+definition of "validity states" and
+<xref type="draft" data="draft-ietf-sidr-origin-validation-signaling"/>
+for the encoding of those "validity states".
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -6669,7 +6668,7 @@ IPSec Security Parameters Index (SPI).
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc2401"/> for the definition of SPI.
 </paragraph>
 </references>
@@ -6690,7 +6689,7 @@ GRE key, which is used for identifying an individual traffic flow within a tunne
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc1701"/> for the definition of GRE and the GRE Key.
 </paragraph>
 </references>
@@ -6733,7 +6732,7 @@ The type of NAT treatment:
 </description>
 <range/>
 <references>
-<paragraph>         
+<paragraph>
 See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 See <xref type="rfc" data="rfc1631"/> for the definition of NAT44.
 See <xref type="rfc" data="rfc6144"/> for the definition of NAT64.
@@ -6764,7 +6763,7 @@ session.
 </description>
 <units>packets</units>
 <references>
-<paragraph>         
+<paragraph>
 See #231, initiatorOctets.
 </paragraph>
 </references>
@@ -6788,7 +6787,7 @@ initiator, and remains the same for the life of the session.
 </description>
 <units>packets</units>
 <references>
-<paragraph>         
+<paragraph>
 See #232, responderOctets.
 </paragraph>
 </references>
@@ -6809,7 +6808,7 @@ observationDomainId.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 See #149, observationDomainId.
 </paragraph>
 </references>
@@ -6921,7 +6920,7 @@ here:
 <paragraph>
 There is a broad variety of possible parameters that could be used
 for Property match Filtering (5) but currently there are no agreed
-parameters specified.        
+parameters specified.
 </paragraph>
 </description>
 <xref type="rfc" data="rfc5477"/>
@@ -7219,7 +7218,7 @@ See <xref type="rfc" data="rfc3032"/> for the specification of the MPLS label st
 The size of the exported section may be constrained due to
 limitations in the IPFIX protocol.
 
-The data for this field MUST NOT be padded.          
+The data for this field MUST NOT be padded.
 </paragraph>
 </description>
 <xref type="rfc" data="rfc5477"/>
@@ -7246,7 +7245,7 @@ See <xref type="rfc" data="rfc3032"/> for the specification of the MPLS label st
 The size of the exported section may be constrained due to
 limitations in the IPFIX protocol.
 
-The data for this field MUST NOT be padded.          
+The data for this field MUST NOT be padded.
 </paragraph>
 </description>
 <xref type="rfc" data="rfc5477"/>
@@ -7267,7 +7266,7 @@ observed by a Selector, for a specific value of SelectorId.
 
 This Information Element should be used in an Options Template
 scoped to the observation to which it refers.  See Section 3.4.2.1
-of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.      
+of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.
 </paragraph>
 </description>
 <units>packets</units>
@@ -7316,12 +7315,12 @@ value.
 This Information Element provides only the error for measured
 values.  If an Information Element contains an estimated value
 (from Sampling), the confidence boundaries and confidence level
-have to be provided instead, using the upperCILimit, lowerCILimit, 
+have to be provided instead, using the upperCILimit, lowerCILimit,
 and confidenceLevel Information Elements.
 
 This Information Element should be used in an Options Template
 scoped to the observation to which it refers.  See Section 3.4.2.1
-of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.   
+of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.
 </paragraph>
 </description>
 <units>The units of the Information Element for which the error is specified.</units>
@@ -7347,12 +7346,12 @@ or negative) from the measured value.
 This Information Element provides only the error for measured
 values.  If an Information Element contains an estimated value
 (from Sampling), the confidence boundaries and confidence level
-have to be provided instead, using the upperCILimit, lowerCILimit, 
+have to be provided instead, using the upperCILimit, lowerCILimit,
 and confidenceLevel Information Elements.
 
 This Information Element should be used in an Options Template
 scoped to the observation to which it refers.  See Section 3.4.2.1
-of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>. 
+of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.
 </paragraph>
 </description>
 <xref type="rfc" data="rfc5477"/>
@@ -7610,8 +7609,8 @@ See also Sections 6.2, 3.8 and 7.1 of <xref type="rfc" data="rfc5475"/>.
 <status>current</status>
 <description>
 <paragraph>
-The name of a selector identified by a selectorID.  Globally 
-unique per Metering Process. 
+The name of a selector identified by a selectorID.  Globally
+unique per Metering Process.
 </paragraph>
 </description>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -7708,7 +7707,7 @@ unless all three are specified together.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>informationElementDataType</name>
 <dataType>unsigned8</dataType>
@@ -7901,14 +7900,14 @@ ignored by the Collecting Process.
 <status>current</status>
 <description>
 <paragraph>
-Instance Identifier of the interface to a Virtual Station. A Virtual 
-Station is an end station instance: it can be a virtual machine or a 
+Instance Identifier of the interface to a Virtual Station. A Virtual
+Station is an end station instance: it can be a virtual machine or a
 physical host.
 </paragraph>
 </description>
 <references>
 <paragraph>
-See IEEE 802.1Qbg for the definition of Virtual Station Interface ID.         
+See IEEE 802.1Qbg for the definition of Virtual Station Interface ID.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -7923,7 +7922,7 @@ See IEEE 802.1Qbg for the definition of Virtual Station Interface ID.
 <status>current</status>
 <description>
 <paragraph>
-Name of the interface to a Virtual Station. A Virtual Station is an end station 
+Name of the interface to a Virtual Station. A Virtual Station is an end station
 instance: it can be a virtual machine or a physical host.
 </paragraph>
 </description>
@@ -7945,7 +7944,7 @@ See IEEE 802.1Qbg for the definition of Virtual Station Interface.
 <status>current</status>
 <description>
 <paragraph>
-Unique Identifier of a Virtual Station. A Virtual Station is an end station 
+Unique Identifier of a Virtual Station. A Virtual Station is an end station
 instance: it can be a virtual machine or a physical host.
 </paragraph>
 </description>
@@ -7966,7 +7965,7 @@ See IEEE 802.1Qbg for the definition of Virtual Station.
 <status>current</status>
 <description>
 <paragraph>
-Name of a Virtual Station. A Virtual Station is an end station 
+Name of a Virtual Station. A Virtual Station is an end station
 instance: it can be a virtual machine or a physical host.
 </paragraph>
 </description>
@@ -7988,8 +7987,8 @@ See IEEE 802.1Qbg for the definition of Virtual Station.
 <status>current</status>
 <description>
 <paragraph>
-Identifier of a layer 2 network segment in an overlay network. 
-The most significant byte identifies the layer 2 network 
+Identifier of a layer 2 network segment in an overlay network.
+The most significant byte identifies the layer 2 network
 overlay network encapsulation type:
 </paragraph>
 <paragraph>
@@ -8029,7 +8028,7 @@ See NVGRE RFC at <xref type="draft" data="draft-sridharan-virtualization-nvgre"/
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
 <revision>0</revision>
 <date>2013-02-18</date>
-</record> 
+</record>
 
 <record>
 <name>layer2OctetDeltaCount</name>
@@ -8063,7 +8062,7 @@ number of octets includes layer 2 header(s) and layer 2 payload.
 <elementId>353</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The total number of layer 2 octets in incoming packets for this
 Flow at the Observation Point since the Metering Process
 (re-)initialization for this Observation Point.  The number of
@@ -8089,9 +8088,9 @@ octets includes layer 2 header(s) and layer 2 payload.
 <elementId>354</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The total number of incoming unicast packets metered at the 
-Observation Point since the Metering Process (re-)initialization 
+<paragraph>
+The total number of incoming unicast packets metered at the
+Observation Point since the Metering Process (re-)initialization
 for this Observation Point.
 </paragraph>
 </description>
@@ -8109,9 +8108,9 @@ for this Observation Point.
 <elementId>355</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The total number of incoming multicast packets metered at the 
-Observation Point since the Metering Process (re-)initialization 
+<paragraph>
+The total number of incoming multicast packets metered at the
+Observation Point since the Metering Process (re-)initialization
 for this Observation Point.
 </paragraph>
 </description>
@@ -8129,9 +8128,9 @@ for this Observation Point.
 <elementId>356</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The total number of incoming broadcast packets metered at the 
-Observation Point since the Metering Process (re-)initialization 
+<paragraph>
+The total number of incoming broadcast packets metered at the
+Observation Point since the Metering Process (re-)initialization
 for this Observation Point.
 </paragraph>
 </description>
@@ -8149,9 +8148,9 @@ for this Observation Point.
 <elementId>357</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The total number of incoming unicast packets metered at the 
-Observation Point since the Metering Process (re-)initialization 
+<paragraph>
+The total number of incoming unicast packets metered at the
+Observation Point since the Metering Process (re-)initialization
 for this Observation Point.
 </paragraph>
 </description>
@@ -8169,9 +8168,9 @@ for this Observation Point.
 <elementId>358</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The total number of incoming broadcast packets metered at the 
-Observation Point since the Metering Process (re-)initialization 
+<paragraph>
+The total number of incoming broadcast packets metered at the
+Observation Point since the Metering Process (re-)initialization
 for this Observation Point.
 </paragraph>
 </description>
@@ -8188,7 +8187,7 @@ for this Observation Point.
 <elementId>359</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The absolute timestamp at which the monitoring interval
 started.
 A Monitoring interval is the period of time during which the Metering
@@ -8207,7 +8206,7 @@ Process is running.
 <elementId>360</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The absolute timestamp at which the monitoring interval ended.
 A Monitoring interval is the period of time during which the Metering
 Process is running.
@@ -8226,13 +8225,13 @@ Process is running.
 <elementId>361</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The port number identifying the start of a range of ports. A value 
+<paragraph>
+The port number identifying the start of a range of ports. A value
 of zero indicates that the range start is not specified, ie the
 range is defined in some other way.
 </paragraph>
 <paragraph>
-Additional information on defined TCP port numbers can be found at 
+Additional information on defined TCP port numbers can be found at
 <xref type="registry" data="service-names-port-numbers"/>.
 </paragraph>
 </description>
@@ -8249,8 +8248,8 @@ Additional information on defined TCP port numbers can be found at
 <elementId>362</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The port number identifying the end of a range of ports. A value 
+<paragraph>
+The port number identifying the end of a range of ports. A value
 of zero indicates that the range end is not specified, ie the
 range is defined in some other way.
 </paragraph>
@@ -8272,10 +8271,10 @@ Additional information on defined TCP port numbers can be found at
 <elementId>363</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The step size in a port range. The default step size is 1,
-which indicates contiguous ports. A value of zero indicates 
-that the step size is not specified, ie the range is defined 
+which indicates contiguous ports. A value of zero indicates
+that the step size is not specified, ie the range is defined
 in some other way.
 </paragraph>
 </description>
@@ -8292,9 +8291,9 @@ in some other way.
 <elementId>364</elementId>
 <status>current</status>
 <description>
-<paragraph>      
-The number of ports in a port range. A value of zero indicates 
-that the number of ports is not specified, ie the range is defined 
+<paragraph>
+The number of ports in a port range. A value of zero indicates
+that the number of ports is not specified, ie the range is defined
 in some other way.
 </paragraph>
 </description>
@@ -8311,7 +8310,7 @@ in some other way.
 <elementId>365</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The IEEE 802 MAC address of a wireless station (STA).
 </paragraph>
 </description>
@@ -8330,7 +8329,7 @@ The IEEE 802 MAC address of a wireless station (STA).
 <elementId>366</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The IPv4 address of a wireless station (STA).
 </paragraph>
 </description>
@@ -8349,7 +8348,7 @@ The IPv4 address of a wireless station (STA).
 <elementId>367</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The IEEE 802 MAC address of a wireless access point (WTP).
 </paragraph>
 </description>
@@ -8368,9 +8367,9 @@ The IEEE 802 MAC address of a wireless access point (WTP).
 <elementId>368</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The type of interface where packets of this Flow are being received.
-The value matches the value of managed object 'ifType' as defined in 
+The value matches the value of managed object 'ifType' as defined in
 <xref type="registry" data="ianaiftype-mib"/>.
 </paragraph>
 </description>
@@ -8389,9 +8388,9 @@ The value matches the value of managed object 'ifType' as defined in
 <elementId>369</elementId>
 <status>current</status>
 <description>
-<paragraph>      
+<paragraph>
 The type of interface where packets of this Flow are being sent.
-The value matches the value of managed object 'ifType' as defined in 
+The value matches the value of managed object 'ifType' as defined in
 <xref type="registry" data="ianaiftype-mib"/>.
 </paragraph>
 </description>
@@ -8414,7 +8413,7 @@ The RTP sequence number per <xref type="rfc" data="rfc3550"/>.
 </paragraph>
 </description>
 <references>
-<paragraph>         
+<paragraph>
 <xref type="rfc" data="rfc3550"/>
 </paragraph>
 </references>
@@ -8751,7 +8750,7 @@ encoded as follows:
 <status>current</status>
 <description>
 <paragraph>
-Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>, 
+Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>,
 measured in milliseconds.
 </paragraph>
 </description>
@@ -8772,7 +8771,7 @@ measured in milliseconds.
 <status>current</status>
 <description>
 <paragraph>
-Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>, 
+Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>,
 measured in microseconds.
 </paragraph>
 </description>
@@ -8793,7 +8792,7 @@ measured in microseconds.
 <status>current</status>
 <description>
 <paragraph>
-Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>, 
+Interarrival jitter as defined in section 6.4.1 of <xref type="rfc" data="rfc3550"/>,
 measured in nanoseconds.
 </paragraph>
 </description>
@@ -8805,7 +8804,7 @@ measured in nanoseconds.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
-    
+
 <record>
 <name>dot1qDEI</name>
 <dataType>boolean</dataType>
@@ -8814,11 +8813,11 @@ measured in nanoseconds.
 <status>current</status>
 <description>
 <paragraph>
-The value of the 1-bit Drop Eligible Indicator (DEI) field of the VLAN tag as 
-described in 802.1Q-2011 subclause 9.6. In case of a QinQ frame, it represents 
-the outer tag's DEI field and in case of an IEEE 802.1ad frame it represents 
-the DEI field of the S-TAG. Note: in earlier versions of 802.1Q the same bit 
-field in the incoming packet is occupied by the Canonical Format Indicator 
+The value of the 1-bit Drop Eligible Indicator (DEI) field of the VLAN tag as
+described in 802.1Q-2011 subclause 9.6. In case of a QinQ frame, it represents
+the outer tag's DEI field and in case of an IEEE 802.1ad frame it represents
+the DEI field of the S-TAG. Note: in earlier versions of 802.1Q the same bit
+field in the incoming packet is occupied by the Canonical Format Indicator
 (CFI) field, except for S-TAGs.
 </paragraph>
 </description>
@@ -8830,7 +8829,7 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <revision>0</revision>
 <date>2013-04-29</date>
 </record>
-    
+
 <record>
 <name>dot1qCustomerDEI</name>
 <dataType>boolean</dataType>
@@ -8839,8 +8838,8 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <status>current</status>
 <description>
 <paragraph>
- In case of a QinQ frame, it represents the inner tag's Drop Eligible Indicator 
- (DEI) field and in case of an IEEE 802.1ad frame it represents the DEI field of 
+ In case of a QinQ frame, it represents the inner tag's Drop Eligible Indicator
+ (DEI) field and in case of an IEEE 802.1ad frame it represents the DEI field of
  the C-TAG.
 </paragraph>
 </description>
@@ -8852,7 +8851,7 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <revision>0</revision>
 <date>2013-04-29</date>
 </record>
- 
+
 <record>
 <name>flowSelectorAlgorithm</name>
 <dataType>unsigned16</dataType>
@@ -8867,7 +8866,7 @@ applied by the Intermediate Flow Selection Process.  Most of these
 techniques have parameters.  Its configuration parameter(s) MUST
 be clearly specified.  Further Information Elements are needed to
 fully specify packet selection with these methods and all their
-parameters.  Further method identifiers may be added to the 
+parameters.  Further method identifiers may be added to the
 flowSelectorAlgorithm registry.  It might be necessary to define new Information Elements
 to specify their parameters.  The flowSelectorAlgorithm registry
 is maintained by IANA.  New assignments for the registry will be
@@ -9097,8 +9096,8 @@ are used by the Hash-based Flow Selector as the Hash Domain.
 <status>current</status>
 <description>
 <paragraph>
-The number of octets, excluding IP header(s) and Layer 4 transport 
-protocol header(s), observed for this Flow at the Observation Point 
+The number of octets, excluding IP header(s) and Layer 4 transport
+protocol header(s), observed for this Flow at the Observation Point
 since the previous report (if any).
 </paragraph>
 </description>
@@ -9116,8 +9115,8 @@ since the previous report (if any).
 <status>current</status>
 <description>
 <paragraph>
-The number of packets containing at least one octet beyond the IP header(s) and 
-Layer 4 transport protocol header(s), observed for this Flow at the Observation 
+The number of packets containing at least one octet beyond the IP header(s) and
+Layer 4 transport protocol header(s), observed for this Flow at the Observation
 Point since the previous report (if any).
 </paragraph>
 </description>
@@ -9349,9 +9348,9 @@ this document).
 <record>
 <value>18</value>
 <description>ETHERTYPE: The Selector ID represents the well-
-known Ethertype. See <xref type="uri" data="http://standards.ieee.org/develop/regauth/ethertype/eth.txt"/>. 
-Note that the Ethertype is usually expressed in 
-hexadecimal. However, the corresponding decimal 
+known Ethertype. See <xref type="uri" data="http://standards.ieee.org/develop/regauth/ethertype/eth.txt"/>.
+Note that the Ethertype is usually expressed in
+hexadecimal. However, the corresponding decimal
 value is used in this Selector ID.
 </description>
 <length>2</length>
@@ -9362,20 +9361,20 @@ value is used in this Selector ID.
 <value>19</value>
 <description>LLC: The Selector ID represents the well-known
 IEEE 802.2 Link Layer Control (LLC) Destination
-Service Access Point (DSAP). 
-See <xref type="uri" data="http://standards.ieee.org/develop/regauth/llc/public.html"/>. 
-Note that LLC DSAP is usually expressed in 
-hexadecimal. However, the corresponding decimal 
+Service Access Point (DSAP).
+See <xref type="uri" data="http://standards.ieee.org/develop/regauth/llc/public.html"/>.
+Note that LLC DSAP is usually expressed in
+hexadecimal. However, the corresponding decimal
 value is used in this Selector ID.
 </description>
 <length>1</length>
 <xref type="rfc" data="rfc6759"/>
-</record>    
+</record>
 
 <record>
 <value>20</value>
 <description>PANA-L7-PEN: Proprietary layer 7 definition,
-including a Private Enterprise Number (PEN) 
+including a Private Enterprise Number (PEN)
 <xref type="registry" data="enterprise-numbers"/>
 to identify that the application registry being
 used is not owned by the Exporter manufacturer or to identify the
@@ -9392,7 +9391,7 @@ enterprise.
 
 </registry>
 
- 
+
 <registry id="ipfix-flowselectoralgorithm">
 <title>flowSelectorAlgorithm (Value 390)</title>
 <registration_rule>Expert Review</registration_rule>
@@ -9411,20 +9410,20 @@ enterprise.
 <parameters>flowSamplingInterval, flowSamplingSpacing</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
-  
+
 <record>
 <value>2</value>
 <description>Systematic time-based Sampling</description>
 <parameters>flowSamplingTimeInterval, flowSamplingTimeSpacing</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
- 
+
 <record>
 <value>3</value>
 <description>Random n-out-of-N Sampling</description>
 <parameters>samplingSize, samplingPopulation</parameters>
 <xref type="rfc" data="rfc7014"/>
-</record> 
+</record>
 
 <record>
 <value>4</value>
@@ -9439,19 +9438,19 @@ enterprise.
 <parameters>Information Element Value Range</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
-  
+
 <record>
 <value>6</value>
 <description>Hash-based Filtering using BOB</description>
-<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin, 
+<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin,
 hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
- 
+
 <record>
 <value>7</value>
 <description>Hash-based Filtering using IPSX</description>
-<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin, 
+<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin,
 hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
@@ -9459,7 +9458,7 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <record>
 <value>8</value>
 <description>Hash-based Filtering using CRC</description>
-<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin, 
+<parameters>hashInitialiserValue, hashFlowDomain, hashSelectedRangeMin,
 hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
@@ -9472,8 +9471,8 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 </record>
 
 </registry>
- 
- 
+
+
 </registry>
 
 
@@ -9941,7 +9940,7 @@ that elements from the list in the structured data are ordered.
 <value>0xFF</value>
 <name>undefined</name>
 <description>The "undefined" structured data type semantic
-specifies that the semantic of the list elements is not specified 
+specifies that the semantic of the list elements is not specified
 and that, if a semantic exists, then it is up to the Collecting
 Process to draw its own conclusions.  The "undefined" structured
 data type semantic is the default structured data type semantic.
@@ -9959,13 +9958,13 @@ data type semantic is the default structured data type semantic.
 <uri>mailto:brian&amp;trammell.ch</uri>
 <updated>2013-08-01</updated>
 </person>
- 
+
 <person id="ipfix-iana_at_cisco.com">
 <name>ipfix-iana at cisco.com</name>
 <uri>mailto:ipfix-iana&amp;cisco.com</uri>
 <updated>2013-04-11</updated>
 </person>
-    
+
 <person id="Yaakov_J_Stein">
 <name>Yaakov (J) Stein</name>
 <uri>mailto:yaakov_s&amp;rad.com</uri>
