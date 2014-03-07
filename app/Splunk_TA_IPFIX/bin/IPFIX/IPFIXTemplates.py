@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 __author__ = 'Joel Bennett'
 from struct import unpack
-from os import path, walk, environ
+from os import path, walk, environ, getpid
+from IPFIX import TEMPLATE_PATH
+
 import xml.etree.cElementTree as ElementTree
-
 import logging
-
+import traceback
 
 class DataType:
     def __init__(self, id, name, unpackCode, defaultLength):
@@ -76,6 +77,8 @@ class TemplateField:
     def __getitem__(cls, item):
         return TemplateField.elements[item]
 
+    def __str__(self):
+        return "Id:{_.id}; Length:{_.length}; EnterpriseId:{_.enterpriseId}; DataType:{_.dataTypeName}; Name:{_.name};".format(_=self)
 
 class Template(object):
     def __init__(self, rawData, logger=logging):
@@ -94,17 +97,17 @@ class Template(object):
             else:
                 self.length += 4
 
-            logger.info("Field: {}:{} ({})".format(enterpriseId, elementId, fieldLength))
+            # logger.info("Field: {}:{} ({})".format(enterpriseId, elementId, fieldLength))
             self.fields.append(TemplateField(elementId, enterpriseId, fieldLength))
 
     def __len__(self):
         return sum([f.length if f.length < 65535 else 2 for f in self.fields])
 
     def __str__(self):
-        return "Template {} with {} fields:\nId  Length Enterprise Type                Name\n".format(self.id,
+        return "Template {} with {} fields:\nId    Length Enterprise Type                 Name\n".format(self.id,
                                                                                                       self.fieldCount) + \
                "\n".join([
-                   "{field.id:<3} {field.length:>6} {field.enterpriseId:<10} {field.dataTypeName:<20} {field.name}".format(
+                   "{field.id:<5} {field.length:>6} {field.enterpriseId:<10} {field.dataTypeName:<20} {field.name}".format(
                        field=field)
                    for field in self.fields])
 
@@ -115,8 +118,24 @@ class Template(object):
         return self.fields.__iter__()
 
 
+class MetaTemplateSet(type):
+    _known_templates = {}
+
+    def _get_known_templates(self):
+        #for key in self._known_templates:
+        #    print("Known templates {} - {} - {} - {}: {}".format(getpid(), id(self._known_templates), key, id(self._known_templates[key]), ", ".join([str(k) for k in self._known_templates[key]])))
+        #print(traceback.format_stack())
+        return self._known_templates
+
+    def _set_known_templates(self, value):
+        #print("Set known templates: {} = {}".format(id(self._known_templates), id(value)))
+        #print(traceback.format_stack())
+        self._known_templates = value
+
+    knownTemplates = property(_get_known_templates, _set_known_templates)
+
 class TemplateSet(object):
-    knownTemplates = {}
+    __metaclass__ = MetaTemplateSet
 
     @staticmethod
     def getTemplateSafe(templateKey, templateId):
@@ -156,7 +175,7 @@ class TemplateSet(object):
             _next = 0
             while _next < self.length:
                 template = Template(rawData[_next:], logger=logger)
-                logger.info("Template {}".format(template.id))
+                logger.debug(str(template))
                 self.templates[template.id] = template
                 _next += template.length
 
@@ -194,6 +213,16 @@ class OptionTemplate(Template):
             self.fields.append(
                 TemplateField(elementId, enterpriseId, fieldLength, isScopeField=(f > self.nonScopeCount)))
 
+    def __len__(self):
+        return sum([f.length if f.length < 65535 else 2 for f in self.fields])
+
+    def __str__(self):
+        return "OptionTemplate {} with {} fields:\nId    Length Enterprise Type                 Name\n".format(self.id, len(self.fields)) + \
+               "\n".join([
+                   "{field.id:<5} {field.length:>6} {field.enterpriseId:<10} {field.dataTypeName:<20} {field.name}".format(
+                       field=field)
+                   for field in self.fields])
+
 
 class OptionTemplateSet(TemplateSet):
     def __init__(self, templateKey, rawData=None, logger=logging):
@@ -212,11 +241,18 @@ class OptionTemplateSet(TemplateSet):
             _next = 0
             while _next < self.length:
                 template = OptionTemplate(rawData[_next:])
-                # print "Template {}".format(template.id)
+                logger.info(str(template))
                 self.templates[template.id] = template
                 _next += template.length
 
         TemplateSet.knownTemplates[key] = self.templates
+
+    def __iter__(self):
+        return self.templates.values().__iter__()
+
+    def __str__(self):
+        return "OptionTemplate Set from {} has {} templates:\n".format(self.templateKey, len(self.templates)) + \
+               "\n\n".join([str(template) for template in self])
 
 
 def flatten(items, name=None):
@@ -235,34 +271,49 @@ def flatten(items, name=None):
             else:
                 yield el
 
-## Load the default ipfix.xml and our handmade netscaler.xml
-if not "SPLUNK_HOME" in environ:
-    TEMPLATE_PATH = path.abspath(path.join(path.dirname(path.abspath(__file__)), 'information-elements'))
-else:
-    APP_PATH = path.join(environ["SPLUNK_HOME"], 'etc', 'apps', 'Splunk_TA_IPFIX')
-    TEMPLATE_PATH = path.abspath(path.join(APP_PATH, 'bin', 'IPFIX', 'information-elements'))
-
+import re
+_iespec_re = re.compile("^(?P<name>\w+)\((?:(?P<pen>\d+)/)?(?P<id>\d+)\)<(?P<type>\w+)>(?:\[(?P<size>\d+)\])?")
 
 for root, dirs, files in walk(TEMPLATE_PATH):
     for filename in files:
         enterpriseId = 0
         name, ext = filename.split('.')
-        if ext == 'xml':
-            fileSource = path.join(TEMPLATE_PATH, filename)
+        fileSource = path.join(TEMPLATE_PATH, filename)
 
+        if ext == 'iespec':
+            with open(fileSource) as f:
+                for line in f:
+                    match = _iespec_re.match(line)
+                    if match is None:
+                        logging.error("{} - invalid iespec line: {}".format(fileSource, line))
+                    else:
+                        record = match.groupdict()
+
+                        TemplateField.elements[
+                            "{}:{}".format(record['pen'] or 0, record['id'])] = \
+                            TemplateField(
+                                elementId=record['id'],
+                                enterpriseId=record['pen'] or 0,
+                                name=record['name'],
+                                dataTypeName=record['type']
+                        )
+        elif ext == 'xml':
             try:
                 spec = ElementTree.parse(fileSource)
             except Exception, e:
                 logging.error("Unable to parse XML for " + fileSource + ": " + str(e))
                 continue
 
-            if filename != "ipfix.xml":
+            if name != "iana":
                 try:
                     registration_rule = spec.getroot().findtext(".//{http://www.iana.org/assignments}registry[@id='ipfix-information-elements']/{http://www.iana.org/assignments}registration_rule")
                     enterpriseId = int(registration_rule)
                 except Exception, e:
-                    logging.warn("No enterprise ID for " + fileSource + ": " + str(e))
-                    enterpriseId = 0
+                    try:
+                        enterpriseId = int(path.split(path.splitext(filename)[0])[1])
+                    except Exception, e:
+                        enterpriseId = 0
+                        pass
                     pass
             ## The ipfix might have lots of registries, the one we care about is the ipfix information elements registry
             records = spec.getroot().findall(
@@ -273,11 +324,11 @@ for root, dirs, files in walk(TEMPLATE_PATH):
                     "{}:{}".format(enterpriseId, record.findtext('{http://www.iana.org/assignments}elementId'))] = \
                     TemplateField(
                         elementId=record.findtext('{http://www.iana.org/assignments}elementId'),
-                        enterpriseId=enterpriseId,
+                        enterpriseId=record.findtext('{http://www.iana.org/assignments}enterpriseId') or enterpriseId,
                         name=record.findtext('{http://www.iana.org/assignments}name'),
                         dataTypeName=record.findtext('{http://www.iana.org/assignments}dataType'),
                         dataTypeSemantics=record.findtext('{http://www.iana.org/assignments}dataTypeSemantics')
-                )
+                    )
 
 
 def test():

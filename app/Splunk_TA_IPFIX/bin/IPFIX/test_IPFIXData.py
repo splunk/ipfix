@@ -113,7 +113,6 @@ class ParsingTests(TestCase):
         self.assertEqual(1, sets)
         self.assertEqual(45, records)
 
-
     def test_CanParseDataWithTemplates(self):
         """Test Parsing the data with the templates"""
         data = [
